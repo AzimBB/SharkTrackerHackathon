@@ -15,77 +15,77 @@ DATA_DIR = "nasa"
 SHARK_MODELS = {
     # Default is the original Great White Shark model
     "Great White Shark": {
-        "weights": {"SST": 0.35, "CHL-A": 0.10, "SSHa": 0.35, "BATHY": 0.20},
+        "weights": {"SST": 0.35, "ChlorophyllA": 0.10, "SSHa": 0.35, "Bathymetry": 0.20},
         "preferences": {
             "SST": {"optimal": (15, 22), "tolerance": (10, 28), "units": "°C"},
-            "CHL-A": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m^3"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "BATHY": {"optimal": (20, 200), "tolerance": (5, 1000), "units": "m"},
+            "Bathymetry": {"optimal": (20, 200), "tolerance": (5, 1000), "units": "m"},
         },
     },
     "Tiger Shark": {
-        "weights": {"SST": 0.40, "CHL-A": 0.10, "SSHa": 0.20, "BATHY": 0.30},
+        "weights": {"SST": 0.40, "ChlorophyllA": 0.10, "SSHa": 0.20, "Bathymetry": 0.30},
         "preferences": {
             "SST": {"optimal": (22, 28), "tolerance": (20, 30), "units": "°C"},
-            "CHL-A": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m^3"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "BATHY": {"optimal": (5, 100), "tolerance": (1, 500), "units": "m"},
+            "Bathymetry": {"optimal": (5, 100), "tolerance": (1, 500), "units": "m"},
         },
     },
     "Whale Shark": {
-        "weights": {"SST": 0.30, "CHL-A": 0.40, "SSHa": 0.10, "BATHY": 0.20},
+        "weights": {"SST": 0.30, "ChlorophyllA": 0.40, "SSHa": 0.10, "Bathymetry": 0.20},
         "preferences": {
             "SST": {"optimal": (26, 30), "tolerance": (21, 32), "units": "°C"},
-            "CHL-A": {"optimal": (1.0, 5.0), "tolerance": (0.5, 10.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (1.0, 5.0), "tolerance": (0.5, 10.0), "units": "mg/m^3"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "BATHY": {"optimal": (20, 500), "tolerance": (5, 2000), "units": "m"},
+            "Bathymetry": {"optimal": (20, 500), "tolerance": (5, 2000), "units": "m"},
         },
     },
     "Bull Shark": {
         # Note: Salinity is a key factor not included in your data. CHL-A/BATHY are proxies for coastal habitat.
-        "weights": {"SST": 0.40, "CHL-A": 0.20, "SSHa": 0.10, "BATHY": 0.30},
+        "weights": {"SST": 0.40, "ChlorophyllA": 0.20, "SSHa": 0.10, "Bathymetry": 0.30},
         "preferences": {
             "SST": {"optimal": (20, 28), "tolerance": (18, 30), "units": "°C"},
-            "CHL-A": {"optimal": (0.5, 3.0), "tolerance": (0.1, 6.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.5, 3.0), "tolerance": (0.1, 6.0), "units": "mg/m^3"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "BATHY": {"optimal": (1, 50), "tolerance": (0, 200), "units": "m"},
+            "Bathymetry": {"optimal": (1, 50), "tolerance": (0, 200), "units": "m"},
         },
     },
     "Greenland Shark": {
-        "weights": {"SST": 0.20, "CHL-A": 0.05, "SSHa": 0.05, "BATHY": 0.70},
+        "weights": {"SST": 0.20, "ChlorophyllA": 0.05, "SSHa": 0.05, "Bathymetry": 0.70},
         # **SST logic is reversed in normalize_preference for this species**
         "preferences": {
             "SST": {"optimal": (-1.8, 5.0), "tolerance": (-2.0, 10.0), "units": "°C", "is_low_temp_opt": True},
-            "CHL-A": {"optimal": (0.1, 1.0), "tolerance": (0.05, 3.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.1, 1.0), "tolerance": (0.05, 3.0), "units": "mg/m^3"},
             "SSHa": {"optimal": (0.0, 0.0), "tolerance": (-0.1, 0.1), "units": "m"}, # Very low SSHA preference
-            "BATHY": {"optimal": (400, 1500), "tolerance": (200, 3000), "units": "m"},
+            "Bathymetry": {"optimal": (400, 1500), "tolerance": (200, 3000), "units": "m"},
         },
     },
     "Reef Shark": {
-        "weights": {"SST": 0.40, "CHL-A": 0.05, "SSHa": 0.05, "BATHY": 0.50},
+        "weights": {"SST": 0.40, "ChlorophyllA": 0.05, "SSHa": 0.05, "Bathymetry": 0.50},
         "preferences": {
             "SST": {"optimal": (24, 28), "tolerance": (22, 30), "units": "°C"},
-            "CHL-A": {"optimal": (0.1, 1.0), "tolerance": (0.05, 2.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.1, 1.0), "tolerance": (0.05, 2.0), "units": "mg/m^3"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "BATHY": {"optimal": (10, 60), "tolerance": (5, 200), "units": "m"},
+            "Bathymetry": {"optimal": (10, 60), "tolerance": (5, 200), "units": "m"},
         },
     },
     "Shortfin Mako Shark": {
-        "weights": {"SST": 0.45, "CHL-A": 0.05, "SSHa": 0.40, "BATHY": 0.10},
+        "weights": {"SST": 0.45, "ChlorophyllA": 0.05, "SSHa": 0.40, "Bathymetry": 0.10},
         "preferences": {
             "SST": {"optimal": (20, 28), "tolerance": (18, 30), "units": "°C"},
-            "CHL-A": {"optimal": (0.1, 0.5), "tolerance": (0.05, 1.0), "units": "mg/m^3"}, # Prefers low CHLA for clear open ocean
+            "ChlorophyllA": {"optimal": (0.1, 0.5), "tolerance": (0.05, 1.0), "units": "mg/m^3"}, # Prefers low CHLA for clear open ocean
             "SSHa": {"optimal": (0.1, 0.3), "tolerance": (0.0, 0.4), "units": "m"},
-            "BATHY": {"optimal": (500, 5000), "tolerance": (150, 5000), "units": "m"}, # Deep-water preference
+            "Bathymetry": {"optimal": (500, 5000), "tolerance": (150, 5000), "units": "m"}, # Deep-water preference
         },
     },
     "shortfin_mako": {
-        "weights": {"SST": 0.40, "CHL-A": 0.10, "SSHa": 0.30, "BATHY": 0.20},
+        "weights": {"SST": 0.40, "ChlorophyllA": 0.10, "SSHa": 0.30, "Bathymetry": 0.20},
         "preferences": {
             "SST": {"optimal": (16, 25), "tolerance": (12, 28), "units": "°C"},
-            "CHL-A": {"optimal": (0.1, 0.8), "tolerance": (0.05, 2.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.1, 0.8), "tolerance": (0.05, 2.0), "units": "mg/m^3"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "BATHY": {"optimal": (100, 1000), "tolerance": (50, 2000), "units": "m"},
+            "Bathymetry": {"optimal": (100, 1000), "tolerance": (50, 2000), "units": "m"},
         },
     },
 }
@@ -233,21 +233,22 @@ def get_dataset_paths(date_str):
 def calculate_hsi():
     try:
         data = request.json
+        print("User sent data: ", data)
 
         lat_min, lat_max = float(data["lat_min"]), float(data["lat_max"])
         lon_min, lon_max = float(data["lon_min"]), float(data["lon_max"])
         target_date_str = data["date"]
 
         shark_type = data.get("shark_type", "Great White Shark")
-        print(shark_type)
+        print("shark type: ",shark_type)
         if shark_type not in SHARK_MODELS:
             return jsonify({"error": f"Unknown shark type: {shark_type}"}), 400
 
         model_data = SHARK_MODELS[shark_type]
         current_weights = model_data["weights"].copy()
-        print(current_weights)
+        print("default weights:" ,current_weights)
         current_preferences = {k: v.copy() for k, v in model_data["preferences"].items()}
-        print(current_preferences)
+        print("default preferences:" ,current_preferences)
 
         # override weights if user provides
         user_weights = data.get("weights", {})
@@ -257,7 +258,7 @@ def calculate_hsi():
                 return jsonify({"error": "Weights must sum to 1.0"}), 400
             current_weights.update(user_weights)
 
-        print(current_weights)
+        print("updated weights:",current_weights)
         # override prefs if provided
         user_prefs = data.get("preferences", {})
         for var, new_prefs in user_prefs.items():
@@ -267,7 +268,7 @@ def calculate_hsi():
                 if "tolerance" in new_prefs:
                     current_preferences[var]["tolerance"] = tuple(new_prefs["tolerance"])
 
-        print(user_prefs)
+        print("updated prefs :",user_prefs)
 
         target_date = pd.to_datetime(target_date_str)
         if not (TIME_START <= target_date <= TIME_END):
@@ -306,21 +307,21 @@ def calculate_hsi():
         ocean_mask = depth_inv > 0
 
         sst_norm = vectorized_normalize_preference(sst_vals, current_preferences["SST"])
-        chla_norm = vectorized_normalize_preference(chla_vals, current_preferences["CHL-A"])
+        chla_norm = vectorized_normalize_preference(chla_vals, current_preferences["ChlorophyllA"])
         ssha_norm = vectorized_normalize_preference(ssha_vals, current_preferences["SSHa"])
-        depth_norm = vectorized_normalize_preference(depth_inv, current_preferences["BATHY"])
+        depth_norm = vectorized_normalize_preference(depth_inv, current_preferences["Bathymetry"])
         eddy_norm = vectorized_eddy_score(ssha_vals, {"preferred": "anticyclonic"})
 
 
         season_scalar = season_score_scalar(target_date, {"peak_month": target_date.month})
         season_norm = np.full_like(sst_norm, season_scalar)
 
-        print("Destianted weights : ",current_weights)
+
         final_hsi = (
                 current_weights.get("SST", 0) * sst_norm +
-                current_weights.get("CHL-A", 0) * chla_norm +
+                current_weights.get("ChlorophyllA", 0) * chla_norm +
                 current_weights.get("SSHa", 0) * ssha_norm +
-                current_weights.get("BATHY", 0) * depth_norm +
+                current_weights.get("Bathymetry", 0) * depth_norm +
                 current_weights.get("EDDY", 0) * eddy_norm +
                 current_weights.get("SEASON", 0) * season_norm
         )
@@ -343,7 +344,6 @@ def calculate_hsi():
                     })
 
         return jsonify({"data": results, "message": f"HSI computed for {len(results)} points"})
-
     except Exception as e:
         print("[ERROR]", e)
         return jsonify({"error": str(e)}), 500
