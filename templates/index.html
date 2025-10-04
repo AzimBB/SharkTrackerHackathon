@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shark HSI Map & Data</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Base styles and custom overrides */
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow: hidden; /* Prevent scrollbars on the body */
+    }
+    #map {
+      /* The map is positioned behind all other UI elements */
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0;
+    }
+    .legend-bar {
+      height: 12px;
+      width: 100%; /* The container will set the actual width */
+      border-radius: 9999px;
+      background: linear-gradient(to right, violet, blue, cyan, yellow, orange, red);
+    }
+    /* Fade-in animation for status messages */
+    .status-message {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Custom scrollbar for the collapsible panel */
+    #panel-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    #panel-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    #panel-body::-webkit-scrollbar-thumb {
+      background: #cbd5e1; /* slate-300 */
+      border-radius: 3px;
+    }
+    #panel-body::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8; /* slate-400 */
+    }
+
+    /* --- START: Replace the previous CSS with this updated version --- */
+    @media (min-width: 640px) { /* Corresponds to Tailwind's 'sm' breakpoint */
+      /*
+        By triggering the hover on the stable parent '.shark-details-box',
+        we create a consistent hover area that doesn't change size,
+        preventing the flickering effect.
+      */
+      .shark-details-box .flex-col {
+        /* Target the inner flex container and change its layout on hover */
+        flex-direction: column;
+      }
+
+      /* Target the children when the stable parent is hovered */
+      .shark-details-box #shark-image-placeholder {
+        width: 100%;
+        height: 12rem; /* 192px */
+      }
+
+      .shark-details-box #shark-description {
+        margin-top: 0.5rem;
+      }
+    }
+    /* --- END: Updated CSS for hover effect --- */
+  </style>
+</head>
+<body class="bg-slate-200">
+
+<div id="map"></div>
+
+<div class="absolute bottom-4 right-4 z-10 flex flex-col items-end gap-3">
+  <div id="status-container">
+    <div id="status" class="status-message bg-white/80 backdrop-blur-sm text-gray-800 text-sm font-medium py-2 px-4 rounded-lg shadow-lg">Ready. Select a shark or draw an area.</div>
+  </div>
+
+  <div class="p-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg w-72">
+    <strong class="text-sm font-semibold text-gray-800">HSI Suitability</strong>
+    <div class="legend-bar mt-2 mb-1"></div>
+    <div class="flex justify-between text-xs text-gray-600 font-medium">
+      <span>0.0 (Poor)</span><span>0.5</span><span>1.0 (Excellent)</span>
+    </div>
+  </div>
+</div>
+
+<div class="absolute top-4 left-4 z-20 w-full max-w-lg bg-white/80 backdrop-blur-sm rounded-xl shadow-2xl transition-all duration-300 ease-in-out">
+  <div class="flex justify-between items-center p-3 border-b border-gray-900/10">
+    <h1 class="text-xl font-bold text-gray-800">Shark Habitat Suitability</h1>
+    <button id="toggle-panel-btn" title="Toggle Panel" class="p-2 rounded-full hover:bg-gray-900/10 transition-colors">
+      <svg id="toggle-icon-minus" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" /></svg>
+      <svg id="toggle-icon-plus" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" /></svg>
+    </button>
+  </div>
+
+  <div id="panel-body" class="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-120px)]">
+
+    <div class="space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+        <div>
+          <label class="text-sm font-semibold text-gray-700">Observation Date & Time</label>
+          <div class="flex items-center gap-2 mt-1">
+            <input type="date" id="date-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm" min="2025-08-08" max="2025-08-28" value="2025-08-08">
+            <input type="time" id="time-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm" value="12:00">
+          </div>
+        </div>
+        <div>
+          <label for="shark-select" class="text-sm font-semibold text-gray-700">Shark Species</label>
+          <select id="shark-select" class="w-full p-2 mt-1 border border-gray-300 rounded-lg text-sm bg-white"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="shark-details-box bg-gray-900/5 p-4 rounded-lg">
+      <h2 class="text-lg font-bold text-gray-800 mb-3" id="current-shark-title">Shark Details</h2>
+      <div class="flex flex-col sm:flex-row gap-4 items-start transition-all  ease-in-out">
+        <div id="shark-image-placeholder" class="h-32 sm:w-32 flex-shrink-0 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 italic text-sm text-center transition-all  ease-in-out cursor-pointer">
+          Shark Image
+        </div>
+        <p id="shark-description" class="text-sm text-gray-600 transition-all duration-300 ease-in-out">Select a shark to view its description.</p>
+      </div>
+    </div>
+
+    <div id="habitat-section" class="bg-white p-4 rounded-lg shadow-lg">
+      <h3 id="habitat-toggle" class="text-lg font-bold mb-2 text-gray-700 cursor-pointer flex justify-between items-center hover:text-blue-600 transition duration-150">
+        Adjust Habitat Parameters
+        <span id="toggle-icon" class="text-xl leading-none">▼</span>
+      </h3>
+
+      <div id="habitat-content">
+        <form id="shark-params-form" class="space-y-2"></form>
+
+        <div class="mt-4 pt-4 border-t border-gray-900/10 flex flex-col sm:flex-row gap-3">
+          <button id="save-params-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-150 ease-in-out">Save Custom Parameters</button>
+          <button id="set-default-btn" class="w-full sm:w-auto bg-transparent hover:bg-red-500 border border-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-150 ease-in-out">Reset to Defaults</button>
+        </div>
+        <p id="save-status" class="mt-2 text-sm font-medium text-green-600 hidden">Parameters saved successfully!</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // --- 1. DEFAULT SHARK DATA STRUCTURE ---
+  const DEFAULT_SHARK_DATA = {
+    'Great White Shark': {
+      description: "The world's largest predatory fish, known for its powerful presence in coastal and offshore waters worldwide, preferring temperate to tropical waters.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/5/56/White_shark.jpg",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.4, optimal_min: 12, optimal_max: 24, tolerance_min: 10, tolerance_max: 28, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.3, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 3.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 5, optimal_max: 100, tolerance_min: 0, tolerance_max: 1200, unit: "m" }
+      }
+    },
+    'Tiger Shark': {
+      description: "A large macropredator found in tropical and temperate ocean waters, often frequenting shallow reefs and lagoons. Known for its distinct stripes.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/3/39/Tiger_shark.jpg",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.5, optimal_min: 22, optimal_max: 30, tolerance_min: 18, tolerance_max: 32, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.2, optimal_min: 0.05, optimal_max: 0.8, tolerance_min: 0.01, tolerance_max: 2.5, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 1, optimal_max: 50, tolerance_min: 0, tolerance_max: 800, unit: "m" }
+      }
+    },
+    'Whale Shark': {
+      description: "The largest fish in the sea, a filter-feeder found in open waters of tropical oceans. They are highly migratory, following plankton blooms.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Whale-shark-enhanced.jpg",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.6, optimal_min: 25, optimal_max: 30, tolerance_min: 21, tolerance_max: 32, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.4, optimal_min: 0.5, optimal_max: 5.0, tolerance_min: 0.2, tolerance_max: 10.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.0, optimal_min: 0, optimal_max: 9999, tolerance_min: 0, tolerance_max: 9999, unit: "m" }
+      }
+    },
+    'Oceanic Whitetip Shark': {
+      description: "A pelagic shark of the tropical and warm temperate seas, preferring deep offshore waters. Known for its distinct white-tipped fins.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Oceanic_Whitetip_Shark_%28Carcharhinus_longimanus%29_at_Elphinstone_Reef%2C_Egypt.jpg/1280px-Oceanic_Whitetip_Shark_%28Carcharhinus_longimanus%29_at_Elphinstone_Reef%2C_Egypt.jpg",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.5, optimal_min: 20, optimal_max: 28, tolerance_min: 18, tolerance_max: 30, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.3, optimal_min: 0.01, optimal_max: 0.5, tolerance_min: 0.0, tolerance_max: 1.5, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.2, optimal_min: 200, optimal_max: 500, tolerance_min: 50, tolerance_max: 2000, unit: "m" }
+      }
+    },
+    'Bull Shark': {
+      description: "Known for its aggressive nature and ability to thrive in both salt and fresh water, often found in warm, shallow waters worldwide.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Requin_bouledogue_%28Carcharhinus_leucas%29_%28Ifremer_00813-92510_-_53587%29.jpg/1280px-Requin_bouledogue_%28Carcharhinus_leucas%29_%28Ifremer_00813-92510_-_53587%29.jpg",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.4, optimal_min: 20, optimal_max: 28, tolerance_min: 18, tolerance_max: 30, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.3, optimal_min: 0.5, optimal_max: 3.0, tolerance_min: 0.1, tolerance_max: 6.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 1, optimal_max: 50, tolerance_min: 0, tolerance_max: 200, unit: "m" }
+      }
+    },
+    'Greenland Shark': {
+      description: "One of the largest and longest-living sharks, inhabiting the cold waters of the North Atlantic. It is a slow-moving, mysterious deep-water species.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/7/77/Somniosus_microcephalus_okeanos.jpg",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.2, optimal_min: -1.8, optimal_max: 5.0, tolerance_min: -2.0, tolerance_max: 10.0, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.1, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 3.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.7, optimal_min: 400, optimal_max: 1500, tolerance_min: 200, tolerance_max: 3000, unit: "m" }
+      }
+    },
+    'Reef Shark': {
+      description: "Commonly refers to several species like the Blacktip or Caribbean Reef Shark. They are typically found in shallow tropical waters around coral reefs.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Caribbean_Reef_Shark_at_North_Dry_Rocks%2C_Key_Largo.jpg/1024px-Caribbean_Reef_Shark_at_North_Dry_Rocks%2C_Key_Largo.jpg",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.45, optimal_min: 24, optimal_max: 28, tolerance_min: 22, tolerance_max: 30, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.05, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 2.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.5, optimal_min: 10, optimal_max: 60, tolerance_min: 5, tolerance_max: 200, unit: "m" }
+      }
+    },
+    'Shortfin Mako Shark': {
+      description: "The fastest shark species, known for its incredible speed and acrobatic leaps. It is a highly migratory, pelagic shark found in temperate and tropical seas.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Isurus_oxyrinchus_by_mark_conlin2.JPG",
+      params: {
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.45, optimal_min: 16, optimal_max: 25, tolerance_min: 12, tolerance_max: 28, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.25, optimal_min: 0.1, optimal_max: 0.8, tolerance_min: 0.05, tolerance_max: 2.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 100, optimal_max: 1000, tolerance_min: 50, tolerance_max: 2000, unit: "m" }
+      }
+    }
+  };
+
+  const LOCAL_STORAGE_KEY = 'sharkHSIParameters';
+  let SHARK_DATA;
+
+  // --- 2. LOCAL STORAGE AND DATA INITIALIZATION ---
+  function initializeSharkData() {
+    const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (storedData) {
+      try {
+        const parsedData = JSON.parse(storedData);
+        SHARK_DATA = Object.keys(DEFAULT_SHARK_DATA).reduce((acc, sharkName) => {
+          acc[sharkName] = {
+            ...DEFAULT_SHARK_DATA[sharkName],
+            params: {
+              ...DEFAULT_SHARK_DATA[sharkName].params,
+              ...(parsedData[sharkName] ? parsedData[sharkName].params : {})
+            }
+          };
+          return acc;
+        }, {});
+      } catch (e) {
+        console.error("Error parsing local storage data, using defaults.", e);
+        SHARK_DATA = JSON.parse(JSON.stringify(DEFAULT_SHARK_DATA));
+      }
+    } else {
+      SHARK_DATA = JSON.parse(JSON.stringify(DEFAULT_SHARK_DATA));
+    }
+    populateSharkSelect();
+  }
+
+  function saveSharkData() {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(SHARK_DATA));
+    document.getElementById('save-status').textContent = 'Parameters saved successfully!';
+    document.getElementById('save-status').classList.remove('hidden');
+    setTimeout(() => document.getElementById('save-status').classList.add('hidden'), 3000);
+  }
+
+  function setDefaultValues() {
+    if (confirm("Are you sure you want to reset all shark parameters to their default values?")) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      SHARK_DATA = JSON.parse(JSON.stringify(DEFAULT_SHARK_DATA));
+      renderSharkDetails(document.getElementById('shark-select').value);
+      document.getElementById('status').textContent = 'Default shark parameters restored.';
+    }
+  }
+
+  // --- 3. UI RENDERING FUNCTIONS ---
+  function populateSharkSelect() {
+    const select = document.getElementById('shark-select');
+    select.innerHTML = '';
+    Object.keys(SHARK_DATA).forEach(sharkName => {
+      const option = new Option(sharkName, sharkName);
+      select.appendChild(option);
+    });
+    const initialShark = Object.keys(SHARK_DATA)[0];
+    select.value = initialShark;
+    renderSharkDetails(initialShark);
+  }
+
+  function renderSharkDetails(sharkName) {
+    const data = SHARK_DATA[sharkName];
+    if (!data) return;
+
+    document.getElementById('current-shark-title').textContent = `${sharkName} Details`;
+    document.getElementById('shark-description').textContent = data.description;
+
+    // Use the image URL from the data object
+    document.getElementById('shark-image-placeholder').innerHTML = `<img src="${data.image}" alt="${sharkName}" class="h-full w-full object-cover rounded-lg">`;
+
+    const form = document.getElementById('shark-params-form');
+    form.innerHTML = '';
+
+    let isFirstParam = true;
+    Object.entries(data.params).forEach(([paramKey, param]) => {
+      const container = document.createElement('div');
+      container.className = 'grid grid-cols-12 gap-2 items-center p-2 bg-gray-900/5 rounded-md';
+
+      const nameLabel = document.createElement('label');
+      nameLabel.className = 'col-span-12 sm:col-span-2 font-medium text-gray-700 text-xs';
+      nameLabel.textContent = param.name.split('(')[0]; // Show only name
+      container.appendChild(nameLabel);
+
+      const inputs = [
+        { key: 'weight', value: param.weight, step: 0.05, min: 0, max: 1 },
+        { key: 'optimal_min', value: param.optimal_min, step: 0.1 },
+        { key: 'optimal_max', value: param.optimal_max, step: 0.1 },
+        { key: 'tolerance_min', value: param.tolerance_min, step: 0.1 },
+        { key: 'tolerance_max', value: param.tolerance_max, step: 0.1 }
+      ];
+
+      inputs.forEach(inputData => {
+        container.appendChild(createParamInput(paramKey, inputData.key, inputData.value, 'number', inputData.min, inputData.max, inputData.step));
+      });
+
+      if (isFirstParam) {
+        const header = document.createElement('div');
+        header.className = 'grid grid-cols-12 gap-2 text-xs font-semibold text-gray-500 mb-1 px-2';
+        header.innerHTML = `
+                    <div class="col-span-12 sm:col-span-2">Parameter</div>
+                    <div class="col-span-4 sm:col-span-2 text-center" title="Weight (0-1)">Wt.</div>
+                    <div class="col-span-4 sm:col-span-2 text-center" title="Optimal Min">O.Min</div>
+                    <div class="col-span-4 sm:col-span-2 text-center" title="Optimal Max">O.Max</div>
+                    <div class="col-span-6 sm:col-span-2 text-center" title="Tolerance Min">T.Min</div>
+                    <div class="col-span-6 sm:col-span-2 text-center" title="Tolerance Max">T.Max</div>
+                `;
+        form.appendChild(header);
+        isFirstParam = false;
+      }
+      form.appendChild(container);
+    });
+  }
+
+  function createParamInput(paramKey, propKey, value, type, min = -9999, max = 9999, step = 0.1) {
+    const inputContainer = document.createElement('div');
+    const isWeight = propKey === 'weight';
+    inputContainer.className = isWeight ? 'col-span-4 sm:col-span-2' : 'col-span-4 sm:col-span-2';
+
+    const input = document.createElement('input');
+    input.type = type;
+    input.value = value;
+    input.min = min;
+    input.max = max;
+    input.step = step;
+    input.dataset.paramKey = paramKey;
+    input.dataset.propKey = propKey;
+    input.className = 'w-full p-1.5 bg-white border border-gray-300 rounded-md text-xs text-center text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition';
+    inputContainer.appendChild(input);
+    return inputContainer;
+  }
+
+  // --- 4. DATA HANDLING AND MAPPING LOGIC ---
+  const API_URL = '/calculate_hsi';
+  let drawnItems = new L.FeatureGroup();
+  let mosaicLayer = new L.FeatureGroup();
+
+  // Initialize map without default zoom control
+  const map = L.map('map', {
+    zoomControl: false
+  }).setView([-30, -50], 4);
+
+  // Add zoom control to the top right
+  L.control.zoom({ position: 'topright' }).addTo(map);
+
+  // **MODIFICATION START**: Replace default Leaflet attribution with Turkmenistan flag
+  const turkmenistanFlagHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Turkmenistan.svg" style="height: 12px; margin-right: 5px; vertical-align: text-bottom;" alt="Flag of Turkmenistan">';
+  map.attributionControl.setPrefix(turkmenistanFlagHTML + ' <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+  // **MODIFICATION END**
+
+  // Add the pupil-friendly tile layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  map.addLayer(drawnItems);
+  map.addLayer(mosaicLayer);
+
+  // Add draw controls to the top right
+  map.addControl(new L.Control.Draw({
+    position: 'topright',
+    edit: { featureGroup: drawnItems },
+    draw: {
+      polyline: false, marker: false, circlemarker: false, circle: false, polygon: false,
+      rectangle: { shapeOptions: { color: '#3b82f6', weight: 2 } } // blue-500
+    }
+  }));
+
+  function getColorForValue(value) {
+    const gradient = [
+      { pos: 0.0, r: 138, g: 43, b: 226 },   // violet
+      { pos: 0.2, r: 0,   g: 0,  b: 255 },   // blue
+      { pos: 0.4, r: 0,   g: 255,b: 255 },   // cyan
+      { pos: 0.6, r: 255, g: 255,b: 0 },     // yellow
+      { pos: 0.8, r: 255, g: 165,b: 0 },     // orange
+      { pos: 1.0, r: 255, g: 0,  b: 0 }      // red
+    ];
+    if (value <= 0) return `rgb(${gradient[0].r},${gradient[0].g},${gradient[0].b})`;
+    if (value >= 1) return `rgb(255,0,0)`;
+    let i = 1;
+    while (value >= gradient[i].pos) i++;
+    const lower = gradient[i - 1];
+    const upper = gradient[i];
+    const range = upper.pos - lower.pos;
+    const rangePct = (value - lower.pos) / range;
+    const r = Math.floor(lower.r + rangePct * (upper.r - lower.r));
+    const g = Math.floor(lower.g + rangePct * (upper.g - lower.g));
+    const b = Math.floor(lower.b + rangePct * (upper.b - lower.b));
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function displayMosaic(rawData, source='data') {
+    const status = document.getElementById('status');
+    mosaicLayer.clearLayers();
+    if (!rawData || rawData.length === 0) {
+      status.textContent = `No valid points received from ${source}.`;
+      return;
+    }
+    const lats = [...new Set(rawData.map(p => p.lat))].sort((a, b) => a - b);
+    const lons = [...new Set(rawData.map(p => p.lon))].sort((a, b) => a - b);
+    const latStep = lats.length > 1 ? Math.abs(lats[1] - lats[0]) : 0.1;
+    const lonStep = lons.length > 1 ? Math.abs(lons[1] - lons[0]) : 0.1;
+
+    rawData.forEach(point => {
+      const bounds = [[point.lat - latStep / 2, point.lon - lonStep / 2], [point.lat + latStep / 2, point.lon + lonStep / 2]];
+      L.rectangle(bounds, {
+        fillColor: getColorForValue(point.hsi),
+        fillOpacity: 0.7,
+        stroke: false
+      }).addTo(mosaicLayer).bindTooltip(`HSI: ${point.hsi.toFixed(3)}`, { sticky: true });
+    });
+    status.textContent = `✅ Mosaic loaded with ${rawData.length} cells for ${document.getElementById('shark-select').value}.`;
+  }
+
+  async function calculateHSI(lat_min, lat_max, lon_min, lon_max) {
+    const date = document.getElementById('date-select').value;
+    const time = document.getElementById('time-select').value;
+    const sharkName = document.getElementById('shark-select').value;
+    const sharkParams = SHARK_DATA[sharkName].params;
+    const status = document.getElementById('status');
+
+    status.textContent = `Calculating HSI for ${sharkName}...`;
+
+    // Compute total weight
+    const totalWeight = Object.values(sharkParams).reduce((sum, p) => sum + parseFloat(p.weight), 0);
+    if (Math.abs(totalWeight - 1.0) > 0.01) {
+      status.textContent = `❌ Error: Total weight for ${sharkName} is ${totalWeight.toFixed(2)}. Must be 1.0.`;
+      mosaicLayer.clearLayers();
+      return;
+    }
+
+    // ✅ Construct `weights` and `preferences` payloads properly
+    const weights = {};
+    const preferences = {};
+
+    for (const [paramKey, param] of Object.entries(sharkParams)) {
+      weights[paramKey] = param.weight;
+      preferences[paramKey] = {
+        optimal_min: param.optimal_min,
+        optimal_max: param.optimal_max,
+        tolerance_min: param.tolerance_min,
+        tolerance_max: param.tolerance_max
+      };
+    }
+
+    const payload = {
+      lat_min, lat_max, lon_min, lon_max,
+      date, time,
+      shark_name: sharkName,
+      weights,
+      preferences
+    };
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || "Server error");
+
+      displayMosaic(data.data, 'server');
+    } catch (err) {
+      status.textContent = `❌ Error: ${err.message}`;
+      mosaicLayer.clearLayers();
+    }
+  }
+
+  // --- 5. EVENT LISTENERS ---
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeSharkData();
+
+    // Panel Toggle Logic
+    const toggleBtn = document.getElementById('toggle-panel-btn');
+    const panelBody = document.getElementById('panel-body');
+    const iconMinus = document.getElementById('toggle-icon-minus');
+    const iconPlus = document.getElementById('toggle-icon-plus');
+    toggleBtn.addEventListener('click', () => {
+      panelBody.classList.toggle('hidden');
+      panelBody.classList.toggle('p-4'); // remove padding when hidden
+      iconMinus.classList.toggle('hidden');
+      iconPlus.classList.toggle('hidden');
+    });
+
+    // Map/Draw Events
+    const recalculateOnMapAction = () => {
+      if (drawnItems.getLayers().length) {
+        const b = drawnItems.getLayers()[0].getBounds();
+        calculateHSI(b.getSouth(), b.getNorth(), b.getWest(), b.getEast());
+      } else {
+        mosaicLayer.clearLayers();
+        document.getElementById('status').textContent = 'Ready. Draw an area or load a file.';
+      }
+    };
+    map.on(L.Draw.Event.CREATED, e => {
+      drawnItems.clearLayers();
+      drawnItems.addLayer(e.layer);
+      recalculateOnMapAction();
+    });
+    map.on(L.Draw.Event.EDITED, recalculateOnMapAction);
+    map.on(L.Draw.Event.DELETED, recalculateOnMapAction);
+
+    // Control Events
+    document.getElementById('date-select').addEventListener('change', recalculateOnMapAction);
+    document.getElementById('time-select').addEventListener('change', recalculateOnMapAction);
+    document.getElementById('shark-select').addEventListener('change', e => {
+      renderSharkDetails(e.target.value);
+      recalculateOnMapAction();
+    });
+
+    // Parameter Editing Events
+    document.getElementById('shark-params-form').addEventListener('input', e => {
+      const input = e.target;
+      if (input.tagName === 'INPUT' && input.dataset.paramKey && input.dataset.propKey) {
+        const sharkName = document.getElementById('shark-select').value;
+        const paramKey = input.dataset.paramKey;
+        const propKey = input.dataset.propKey;
+        SHARK_DATA[sharkName].params[paramKey][propKey] = parseFloat(input.value);
+      }
+    });
+
+    // Use a slight debounce on parameter input to avoid spamming the server
+    let timeoutId;
+    document.getElementById('shark-params-form').addEventListener('input', () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        recalculateOnMapAction();
+      }, 500); // 500ms delay
+    });
+
+    document.getElementById('save-params-btn').addEventListener('click', saveSharkData);
+    document.getElementById('set-default-btn').addEventListener('click', setDefaultValues);
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('habitat-toggle');
+    const contentDiv = document.getElementById('habitat-content');
+    const toggleIcon = document.getElementById('toggle-icon');
+
+    // Optional: Start the section collapsed by adding 'hidden' here and changing the initial icon in HTML
+    contentDiv.classList.add('hidden');
+    toggleIcon.textContent = '+';
+
+    toggleButton.addEventListener('click', () => {
+      // Toggle the 'hidden' class
+      contentDiv.classList.toggle('hidden');
+
+      // Update the icon
+      if (contentDiv.classList.contains('hidden')) {
+        toggleIcon.textContent = '+'; // Right-pointing arrow (Collapsed)
+      } else {
+        toggleIcon.textContent = '-'; // Down-pointing arrow (Expanded)
+      }
+    });
+  });
+
+</script>
+</body>
+</html>
