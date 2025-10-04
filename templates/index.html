@@ -447,16 +447,16 @@
   async function calculateHSI(lat_min, lat_max, lon_min, lon_max) {
     const date = document.getElementById('date-select').value;
     const time = document.getElementById('time-select').value;
-    const sharkName = document.getElementById('shark-select').value;
-    const sharkParams = SHARK_DATA[sharkName].params;
+    const sharkType = document.getElementById('shark-select').value;
+    const sharkParams = SHARK_DATA[sharkType].params;
     const status = document.getElementById('status');
 
-    status.textContent = `Calculating HSI for ${sharkName}...`;
+    status.textContent = `Calculating HSI for ${sharkType}...`;
 
     // Compute total weight
     const totalWeight = Object.values(sharkParams).reduce((sum, p) => sum + parseFloat(p.weight), 0);
     if (Math.abs(totalWeight - 1.0) > 0.01) {
-      status.textContent = `❌ Error: Total weight for ${sharkName} is ${totalWeight.toFixed(2)}. Must be 1.0.`;
+      status.textContent = `❌ Error: Total weight for ${sharkType} is ${totalWeight.toFixed(2)}. Must be 1.0.`;
       mosaicLayer.clearLayers();
       return;
     }
@@ -478,7 +478,7 @@
     const payload = {
       lat_min, lat_max, lon_min, lon_max,
       date, time,
-      shark_name: sharkName,
+      shark_type: sharkType,
       weights,
       preferences
     };
