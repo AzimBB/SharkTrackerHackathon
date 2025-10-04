@@ -18,75 +18,64 @@ SHARK_MODELS = {
         "weights": {"SST": 0.35, "ChlorophyllA": 0.10, "SSHa": 0.35, "Bathymetry": 0.20},
         "preferences": {
             "SST": {"optimal": (15, 22), "tolerance": (10, 28), "units": "°C"},
-            "ChlorophyllA": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m³"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "Bathymetry": {"optimal": (20, 200), "tolerance": (5, 1000), "units": "m"},
-        },
+            "Bathymetry": {"optimal": (20, 200), "tolerance": (5, 1000), "units": "m"}
+        }
     },
     "Tiger Shark": {
         "weights": {"SST": 0.40, "ChlorophyllA": 0.10, "SSHa": 0.20, "Bathymetry": 0.30},
         "preferences": {
             "SST": {"optimal": (22, 28), "tolerance": (20, 30), "units": "°C"},
-            "ChlorophyllA": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.2, 2.0), "tolerance": (0.1, 5.0), "units": "mg/m³"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "Bathymetry": {"optimal": (5, 100), "tolerance": (1, 500), "units": "m"},
-        },
+            "Bathymetry": {"optimal": (5, 100), "tolerance": (1, 500), "units": "m"}
+        }
     },
     "Whale Shark": {
         "weights": {"SST": 0.30, "ChlorophyllA": 0.40, "SSHa": 0.10, "Bathymetry": 0.20},
         "preferences": {
             "SST": {"optimal": (26, 30), "tolerance": (21, 32), "units": "°C"},
-            "ChlorophyllA": {"optimal": (1.0, 5.0), "tolerance": (0.5, 10.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.5, 5.0), "tolerance": (0.3, 10.0), "units": "mg/m³"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "Bathymetry": {"optimal": (20, 500), "tolerance": (5, 2000), "units": "m"},
-        },
+            "Bathymetry": {"optimal": (20, 500), "tolerance": (5, 2000), "units": "m"}
+        }
     },
     "Bull Shark": {
-        # Note: Salinity is a key factor not included in your data. CHL-A/BATHY are proxies for coastal habitat.
         "weights": {"SST": 0.40, "ChlorophyllA": 0.20, "SSHa": 0.10, "Bathymetry": 0.30},
         "preferences": {
             "SST": {"optimal": (20, 28), "tolerance": (18, 30), "units": "°C"},
-            "ChlorophyllA": {"optimal": (0.5, 3.0), "tolerance": (0.1, 6.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.5, 3.0), "tolerance": (0.1, 6.0), "units": "mg/m³"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "Bathymetry": {"optimal": (1, 50), "tolerance": (0, 200), "units": "m"},
-        },
+            "Bathymetry": {"optimal": (1, 50), "tolerance": (0, 200), "units": "m"}
+        }
     },
     "Greenland Shark": {
         "weights": {"SST": 0.20, "ChlorophyllA": 0.05, "SSHa": 0.05, "Bathymetry": 0.70},
-        # **SST logic is reversed in normalize_preference for this species**
         "preferences": {
             "SST": {"optimal": (-1.8, 5.0), "tolerance": (-2.0, 10.0), "units": "°C", "is_low_temp_opt": True},
-            "ChlorophyllA": {"optimal": (0.1, 1.0), "tolerance": (0.05, 3.0), "units": "mg/m^3"},
-            "SSHa": {"optimal": (0.0, 0.0), "tolerance": (-0.1, 0.1), "units": "m"}, # Very low SSHA preference
-            "Bathymetry": {"optimal": (400, 1500), "tolerance": (200, 3000), "units": "m"},
-        },
+            "ChlorophyllA": {"optimal": (0.1, 1.0), "tolerance": (0.05, 3.0), "units": "mg/m³"},
+            "SSHa": {"optimal": (0.0, 0.0), "tolerance": (-0.1, 0.1), "units": "m"},
+            "Bathymetry": {"optimal": (400, 1500), "tolerance": (200, 3000), "units": "m"}
+        }
     },
     "Reef Shark": {
         "weights": {"SST": 0.40, "ChlorophyllA": 0.05, "SSHa": 0.05, "Bathymetry": 0.50},
         "preferences": {
             "SST": {"optimal": (24, 28), "tolerance": (22, 30), "units": "°C"},
-            "ChlorophyllA": {"optimal": (0.1, 1.0), "tolerance": (0.05, 2.0), "units": "mg/m^3"},
+            "ChlorophyllA": {"optimal": (0.1, 1.0), "tolerance": (0.05, 2.0), "units": "mg/m³"},
             "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "Bathymetry": {"optimal": (10, 60), "tolerance": (5, 200), "units": "m"},
-        },
+            "Bathymetry": {"optimal": (1, 40), "tolerance": (0, 100), "units": "m"}
+        }
     },
     "Shortfin Mako Shark": {
         "weights": {"SST": 0.45, "ChlorophyllA": 0.05, "SSHa": 0.40, "Bathymetry": 0.10},
         "preferences": {
-            "SST": {"optimal": (20, 28), "tolerance": (18, 30), "units": "°C"},
-            "ChlorophyllA": {"optimal": (0.1, 0.5), "tolerance": (0.05, 1.0), "units": "mg/m^3"}, # Prefers low CHLA for clear open ocean
+            "SST": {"optimal": (17, 24), "tolerance": (15, 30), "units": "°C"},
+            "ChlorophyllA": {"optimal": (0.1, 0.6), "tolerance": (0.05, 1.5), "units": "mg/m³"},
             "SSHa": {"optimal": (0.1, 0.3), "tolerance": (0.0, 0.4), "units": "m"},
-            "Bathymetry": {"optimal": (500, 5000), "tolerance": (150, 5000), "units": "m"}, # Deep-water preference
-        },
-    },
-    "shortfin_mako": {
-        "weights": {"SST": 0.40, "ChlorophyllA": 0.10, "SSHa": 0.30, "Bathymetry": 0.20},
-        "preferences": {
-            "SST": {"optimal": (16, 25), "tolerance": (12, 28), "units": "°C"},
-            "ChlorophyllA": {"optimal": (0.1, 0.8), "tolerance": (0.05, 2.0), "units": "mg/m^3"},
-            "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "Bathymetry": {"optimal": (100, 1000), "tolerance": (50, 2000), "units": "m"},
-        },
+            "Bathymetry": {"optimal": (150, 2000), "tolerance": (50, 5000), "units": "m"}
+        }
     },
 }
 
@@ -95,54 +84,54 @@ TIME_START = pd.to_datetime("2025-08-08")
 TIME_END = pd.to_datetime("2025-08-28")
 
 # File mapping (kept for context, no change needed)
-FILE_MAP = {
-    # ... (Your existing FILE_MAP data) ...
-    '2025-08-08': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-    '2025-08-09': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-    '2025-08-10': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-    '2025-08-11': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-    '2025-08-12': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-    '2025-08-13': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-    '2025-08-14': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-    '2025-08-15': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-    '2025-08-16': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-    '2025-08-17': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-    '2025-08-18': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-    '2025-08-19': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-    '2025-08-20': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-    '2025-08-21': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-    '2025-08-22': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-    '2025-08-23': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-    '2025-08-24': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-    '2025-08-25': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-    '2025-08-26': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-    '2025-08-27': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-    '2025-08-28': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-}
 # FILE_MAP = {
 #     # ... (Your existing FILE_MAP data) ...
-#     '2025-08-08': ('AQUA_MODIS.20250808.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250808.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-09': ('AQUA_MODIS.20250809.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250809.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-10': ('AQUA_MODIS.20250810.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250810.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-11': ('AQUA_MODIS.20250811.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250811.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-12': ('AQUA_MODIS.20250812.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250812.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-13': ('AQUA_MODIS.20250813.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250813.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-14': ('AQUA_MODIS.20250814.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250814.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-15': ('AQUA_MODIS.20250815.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250815.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-16': ('AQUA_MODIS.20250816.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250816.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-17': ('AQUA_MODIS.20250817.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250817.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-18': ('AQUA_MODIS.20250818.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250818.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-19': ('AQUA_MODIS.20250819.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250819.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-20': ('AQUA_MODIS.20250820.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250820.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-21': ('AQUA_MODIS.20250821.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250821.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-22': ('AQUA_MODIS.20250822.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250822.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-23': ('AQUA_MODIS.20250823.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250823.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-24': ('AQUA_MODIS.20250824.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250824.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-25': ('AQUA_MODIS.20250825.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250825.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-26': ('AQUA_MODIS.20250826.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250826.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-27': ('AQUA_MODIS.20250827.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250827.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-#     '2025-08-28': ('AQUA_MODIS.20250828.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250828.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-08': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+#     '2025-08-09': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+#     '2025-08-10': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+#     '2025-08-11': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+#     '2025-08-12': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+#     '2025-08-13': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+#     '2025-08-14': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+#     '2025-08-15': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+#     '2025-08-16': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+#     '2025-08-17': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+#     '2025-08-18': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+#     '2025-08-19': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+#     '2025-08-20': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+#     '2025-08-21': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+#     '2025-08-22': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+#     '2025-08-23': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+#     '2025-08-24': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+#     '2025-08-25': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+#     '2025-08-26': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+#     '2025-08-27': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+#     '2025-08-28': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
 # }
+FILE_MAP = {
+    # ... (Your existing FILE_MAP data) ...
+    '2025-08-08': ('AQUA_MODIS.20250808.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250808.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-09': ('AQUA_MODIS.20250809.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250809.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-10': ('AQUA_MODIS.20250810.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250810.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-11': ('AQUA_MODIS.20250811.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250811.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-12': ('AQUA_MODIS.20250812.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250812.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-13': ('AQUA_MODIS.20250813.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250813.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-14': ('AQUA_MODIS.20250814.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250814.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-15': ('AQUA_MODIS.20250815.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250815.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-16': ('AQUA_MODIS.20250816.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250816.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-17': ('AQUA_MODIS.20250817.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250817.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-18': ('AQUA_MODIS.20250818.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250818.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-19': ('AQUA_MODIS.20250819.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250819.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-20': ('AQUA_MODIS.20250820.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250820.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-21': ('AQUA_MODIS.20250821.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250821.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-22': ('AQUA_MODIS.20250822.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250822.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-23': ('AQUA_MODIS.20250823.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250823.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-24': ('AQUA_MODIS.20250824.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250824.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-25': ('AQUA_MODIS.20250825.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250825.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-26': ('AQUA_MODIS.20250826.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250826.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-27': ('AQUA_MODIS.20250827.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250827.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-28': ('AQUA_MODIS.20250828.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250828.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+}
 
 BATHY_FILE = os.path.join(DATA_DIR, "GEBCO_2025_sub_ice.nc")
 
@@ -193,27 +182,8 @@ def vectorized_normalize_preference(arr, prefs):
     return np.clip(out, 0.0, 1.0)
 
 
-def vectorized_eddy_score(ssha_arr, eddy_pref):
-    ssha = np.array(ssha_arr, dtype=float)
-    out = np.full_like(ssha, 0.5, dtype=float)
-    pos_mask = ssha > 0.05
-    neg_mask = ssha < -0.05
-    if eddy_pref.get("preferred", "anticyclonic") == "anticyclonic":
-        out[pos_mask] = 1.0
-        out[neg_mask] = 0.0
-    else:
-        out[pos_mask] = 0.0
-        out[neg_mask] = 1.0
-    out[np.isnan(ssha)] = 0.0
-    return out
 
 
-def season_score_scalar(date, season_pref):
-    peak = season_pref.get("peak_month", 1)
-    month = pd.to_datetime(date).month
-    angle_peak = 2 * np.pi * (peak / 12.0)
-    angle_month = 2 * np.pi * (month / 12.0)
-    return float((np.cos(angle_peak - angle_month) + 1.0) / 2.0)
 
 
 def get_dataset_paths(date_str):
@@ -233,22 +203,22 @@ def get_dataset_paths(date_str):
 def calculate_hsi():
     try:
         data = request.json
-        print("User sent data: ", data)
+        # print("User sent data: ", data)
 
         lat_min, lat_max = float(data["lat_min"]), float(data["lat_max"])
         lon_min, lon_max = float(data["lon_min"]), float(data["lon_max"])
         target_date_str = data["date"]
 
         shark_type = data.get("shark_type", "Great White Shark")
-        print("shark type: ",shark_type)
+        # print("shark type: ",shark_type)
         if shark_type not in SHARK_MODELS:
             return jsonify({"error": f"Unknown shark type: {shark_type}"}), 400
 
         model_data = SHARK_MODELS[shark_type]
         current_weights = model_data["weights"].copy()
-        print("default weights:" ,current_weights)
+        # print("default weights:" ,current_weights)
         current_preferences = {k: v.copy() for k, v in model_data["preferences"].items()}
-        print("default preferences:" ,current_preferences)
+        # print("default preferences:" ,current_preferences)
 
         # override weights if user provides
         user_weights = data.get("weights", {})
@@ -258,7 +228,7 @@ def calculate_hsi():
                 return jsonify({"error": "Weights must sum to 1.0"}), 400
             current_weights.update(user_weights)
 
-        print("updated weights:",current_weights)
+        # print("updated weights:",current_weights)
         # override prefs if provided
         user_prefs = data.get("preferences", {})
         for var, new_prefs in user_prefs.items():
@@ -268,7 +238,7 @@ def calculate_hsi():
                 if "tolerance" in new_prefs:
                     current_preferences[var]["tolerance"] = tuple(new_prefs["tolerance"])
 
-        print("updated prefs :",user_prefs)
+        # print("updated prefs :",user_prefs)
 
         target_date = pd.to_datetime(target_date_str)
         if not (TIME_START <= target_date <= TIME_END):
@@ -282,18 +252,21 @@ def calculate_hsi():
         lon_mesh, lat_mesh = np.meshgrid(lons, lats)
 
         # ---------------- DATA EXTRACTION ----------------
-        with xr.open_dataset(chla_path) as ds_chla, xr.open_dataset(sst_path) as ds_sst, \
-                xr.open_dataset(ssha_path) as ds_ssha_raw, xr.open_dataset(BATHY_FILE) as ds_bathy:
+        with xr.open_dataset(chla_path, engine="netcdf4") as ds_chla, xr.open_dataset(sst_path, engine="netcdf4") as ds_sst, \
+                xr.open_dataset(ssha_path, engine="netcdf4") as ds_ssha_raw, xr.open_dataset(BATHY_FILE, engine="netcdf4") as ds_bathy:
 
             ds_ssha = ds_ssha_raw.rename({"latitude": "lat", "longitude": "lon"})
 
             chla_interp = ds_chla["chlor_a"].interp(lat=(("y", "x"), lat_mesh), lon=(("y", "x"), lon_mesh))
             sst_interp = ds_sst["sst"].interp(lat=(("y", "x"), lat_mesh), lon=(("y", "x"), lon_mesh))
 
-            try:
-                ssha_interp = ds_ssha["sla"].sel(time=target_date_str).interp(lat=(("y", "x"), lat_mesh), lon=(("y", "x"), lon_mesh))
-            except Exception:
-                ssha_interp = ds_ssha["sla"].interp(lat=(("y", "x"), lat_mesh), lon=(("y", "x"), lon_mesh))
+
+
+            ssha_interp = ds_ssha["sla"].sel(
+                time=target_date_str,
+                method='nearest').interp(
+                lat=(("y", "x"), lat_mesh),
+                lon=(("y", "x"), lon_mesh))
 
             depth_interp = ds_bathy["elevation"].interp(lat=(("y", "x"), lat_mesh), lon=(("y", "x"), lon_mesh))
 
@@ -306,37 +279,36 @@ def calculate_hsi():
         depth_inv = -np.array(depth_vals, dtype=float)
         ocean_mask = depth_inv > 0
 
+        # --- NEW LOGIC TO EXPLICITLY REMOVE LAND DATA ---
+        # Apply the ocean mask to all environmental data before normalization.
+        # This ensures we are only processing values over the ocean.
+        sst_vals[~ocean_mask] = np.nan
+        chla_vals[~ocean_mask] = np.nan
+        ssha_vals[~ocean_mask] = np.nan
+        # depth_inv is already handled by the final masking, but this is good practice
+        depth_inv[~ocean_mask] = np.nan
+        # ----------------------------------------------------
+
+
         sst_norm = vectorized_normalize_preference(sst_vals, current_preferences["SST"])
         chla_norm = vectorized_normalize_preference(chla_vals, current_preferences["ChlorophyllA"])
         ssha_norm = vectorized_normalize_preference(ssha_vals, current_preferences["SSHa"])
         depth_norm = vectorized_normalize_preference(depth_inv, current_preferences["Bathymetry"])
-        eddy_norm = vectorized_eddy_score(ssha_vals, {"preferred": "anticyclonic"})
 
 
-        season_scalar = season_score_scalar(target_date, {"peak_month": target_date.month})
-        season_norm = np.full_like(sst_norm, season_scalar)
 
-        print("sst_norm: ", sst_norm)
-        print("chla_norm: ", chla_norm)
-        print("ssha_norm: ", ssha_norm)
-        print("depth_norm: ", depth_norm)
-        print("eddy_norm: ", eddy_norm)
-        print("season_norm: ", season_norm)
 
         final_hsi = (
                 current_weights.get("SST", 0) * sst_norm +
                 current_weights.get("ChlorophyllA", 0) * chla_norm +
                 current_weights.get("SSHa", 0) * ssha_norm +
-                current_weights.get("Bathymetry", 0) * depth_norm +
-                current_weights.get("EDDY", 0) * eddy_norm +
-                current_weights.get("SEASON", 0) * season_norm
+                current_weights.get("Bathymetry", 0) * depth_norm
         )
         # Remove any singleton dimensions (e.g. time dimension)
         final_hsi = np.squeeze(final_hsi)
 
         # Now apply the ocean mask
         final_hsi[~ocean_mask] = np.nan
-
 
 
         results = []
@@ -348,9 +320,7 @@ def calculate_hsi():
                         "lon": float(lon_mesh[i, j]),
                         "hsi": float(final_hsi[i, j])
                     })
-
         return jsonify({"data": results, "message": f"HSI computed for {len(results)} points"})
-
     except Exception as e:
         print("[ERROR]", e)
         return jsonify({"error": str(e)}), 500
@@ -365,4 +335,4 @@ def index():
 # -----------------------------
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=80)
+    app.run(debug=False, host="0.0.0.0", port=80)
