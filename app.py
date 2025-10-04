@@ -316,6 +316,12 @@ def calculate_hsi():
         season_scalar = season_score_scalar(target_date, {"peak_month": target_date.month})
         season_norm = np.full_like(sst_norm, season_scalar)
 
+        print("sst_norm: ", sst_norm)
+        print("chla_norm: ", chla_norm)
+        print("ssha_norm: ", ssha_norm)
+        print("depth_norm: ", depth_norm)
+        print("eddy_norm: ", eddy_norm)
+        print("season_norm: ", season_norm)
 
         final_hsi = (
                 current_weights.get("SST", 0) * sst_norm +
@@ -344,9 +350,11 @@ def calculate_hsi():
                     })
 
         return jsonify({"data": results, "message": f"HSI computed for {len(results)} points"})
+
     except Exception as e:
         print("[ERROR]", e)
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/',  methods=["GET"])
 def index():
