@@ -79,80 +79,167 @@
       }
     }
     /* --- END: Updated CSS for hover effect --- */
+
+    /* Navigation Bar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(25, 25, 35, 0.95);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: #4ecca3;
+      font-size: 1.8rem;
+    }
+
+    .logo h1 {
+      color: #f8f9fa;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: #f8f9fa;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: #4ecca3;
+      background: rgba(78, 204, 163, 0.1);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #4ecca3;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Adjust main content to account for navbar */
+    .main-content {
+      margin-top: 80px; /* Height of navbar */
+    }
   </style>
 </head>
 <body class="bg-slate-200">
 
-<div id="map"></div>
-
-<div class="absolute bottom-4 right-4 z-10 flex flex-col items-end gap-3">
-  <div id="status-container">
-    <div id="status" class="status-message bg-white/80 backdrop-blur-sm text-gray-800 text-sm font-medium py-2 px-4 rounded-lg shadow-lg">Ready. Select a shark or draw an area.</div>
+<!-- Navigation Bar -->
+<div class="navbar">
+  <div class="logo">
+    <i class="fas fa-fish"></i>
+    <h1>Sharks Trackers</h1>
   </div>
-
-  <div class="p-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg w-72">
-    <strong class="text-sm font-semibold text-gray-800">HSI Suitability</strong>
-    <div class="legend-bar mt-2 mb-1"></div>
-    <div class="flex justify-between text-xs text-gray-600 font-medium">
-      <span>0.0 (Poor)</span><span>0.5</span><span>1.0 (Excellent)</span>
-    </div>
+  <div class="nav-links">
+    <a href="/"><i class="fas fa-home mr-2"></i>Home</a>
+    <a href="/tag"><i class="fas fa-tags mr-2"></i>Suggestions For Tag</a>
+    <a href="/about"><i class="fas fa-info-circle mr-2"></i>About Us</a>
   </div>
 </div>
 
-<div class="absolute top-4 left-4 z-20 w-full max-w-lg bg-white/80 backdrop-blur-sm rounded-xl shadow-2xl transition-all duration-300 ease-in-out">
-  <div class="flex justify-between items-center p-3 border-b border-gray-900/10">
-    <h1 class="text-xl font-bold text-gray-800">Shark Habitat Suitability</h1>
-    <button id="toggle-panel-btn" title="Toggle Panel" class="p-2 rounded-full hover:bg-gray-900/10 transition-colors">
-      <svg id="toggle-icon-minus" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" /></svg>
-      <svg id="toggle-icon-plus" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" /></svg>
-    </button>
+<div class="main-content">
+  <div id="map"></div>
+
+  <div class="absolute bottom-4 right-4 z-10 flex flex-col items-end gap-3">
+    <div id="status-container">
+      <div id="status" class="status-message bg-white/80 backdrop-blur-sm text-gray-800 text-sm font-medium py-2 px-4 rounded-lg shadow-lg">Ready. Select a shark or draw an area.</div>
+    </div>
+
+    <div class="p-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg w-72">
+      <strong class="text-sm font-semibold text-gray-800">HSI Suitability</strong>
+      <div class="legend-bar mt-2 mb-1"></div>
+      <div class="flex justify-between text-xs text-gray-600 font-medium">
+        <span>0.0 (Poor)</span><span>0.5</span><span>1.0 (Excellent)</span>
+      </div>
+    </div>
   </div>
 
-  <div id="panel-body" class="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-120px)]">
+  <div class="absolute top-50 left-4 z-20 w-full max-w-lg bg-white/80 backdrop-blur-sm rounded-xl shadow-2xl transition-all duration-300 ease-in-out"><div class="flex justify-between items-center p-3 border-b border-gray-900/10">
+      <h1 class="text-xl font-bold text-gray-800">Shark Habitat Suitability</h1>
+      <button id="toggle-panel-btn" title="Toggle Panel" class="p-2 rounded-full hover:bg-gray-900/10 transition-colors">
+        <svg id="toggle-icon-minus" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" /></svg>
+        <svg id="toggle-icon-plus" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" /></svg>
+      </button>
+    </div>
 
-    <div class="space-y-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-        <div>
-          <label class="text-sm font-semibold text-gray-700">Observation Date & Time</label>
-          <div class="flex items-center gap-2 mt-1">
-            <input type="date" id="date-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm" min="2025-08-08" max="2025-08-28" value="2025-08-08">
-            <input type="time" id="time-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm" value="12:00">
+    <div id="panel-body" class="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-120px)]">
+
+      <div class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+          <div>
+            <label class="text-sm font-semibold text-gray-700">Observation Date & Time</label>
+            <div class="flex items-center gap-2 mt-1">
+              <input type="date" id="date-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm" min="2025-08-08" max="2025-08-28" value="2025-08-08">
+              <input type="time" id="time-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm" value="12:00">
+            </div>
+          </div>
+          <div>
+            <label for="shark-select" class="text-sm font-semibold text-gray-700">Shark Species</label>
+            <select id="shark-select" class="w-full p-2 mt-1 border border-gray-300 rounded-lg text-sm bg-white"></select>
           </div>
         </div>
-        <div>
-          <label for="shark-select" class="text-sm font-semibold text-gray-700">Shark Species</label>
-          <select id="shark-select" class="w-full p-2 mt-1 border border-gray-300 rounded-lg text-sm bg-white"></select>
+      </div>
+
+      <div class="shark-details-box bg-gray-900/5 p-4 rounded-lg">
+        <h2 class="text-lg font-bold text-gray-800 mb-3" id="current-shark-title">Shark Details</h2>
+        <div class="flex flex-col sm:flex-row gap-4 items-start transition-all  ease-in-out">
+          <div id="shark-image-placeholder" class="h-32 sm:w-32 flex-shrink-0 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 italic text-sm text-center transition-all  ease-in-out cursor-pointer">
+            Shark Image
+          </div>
+          <p id="shark-description" class="text-sm text-gray-600 transition-all duration-300 ease-in-out">Select a shark to view its description.</p>
         </div>
       </div>
-    </div>
 
-    <div class="shark-details-box bg-gray-900/5 p-4 rounded-lg">
-      <h2 class="text-lg font-bold text-gray-800 mb-3" id="current-shark-title">Shark Details</h2>
-      <div class="flex flex-col sm:flex-row gap-4 items-start transition-all  ease-in-out">
-        <div id="shark-image-placeholder" class="h-32 sm:w-32 flex-shrink-0 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 italic text-sm text-center transition-all  ease-in-out cursor-pointer">
-          Shark Image
+      <div id="habitat-section" class="bg-white p-4 rounded-lg shadow-lg">
+        <h3 id="habitat-toggle" class="text-lg font-bold mb-2 text-gray-700 cursor-pointer flex justify-between items-center hover:text-blue-600 transition duration-150">
+          Adjust Habitat Parameters
+          <span id="toggle-icon" class="text-xl leading-none">▼</span>
+        </h3>
+
+        <div id="habitat-content">
+          <form id="shark-params-form" class="space-y-2"></form>
+
+          <div class="mt-4 pt-4 border-t border-gray-900/10 flex flex-col sm:flex-row gap-3">
+            <button id="save-params-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-150 ease-in-out">Save Custom Parameters</button>
+            <button id="set-default-btn" class="w-full sm:w-auto bg-transparent hover:bg-red-500 border border-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-150 ease-in-out">Reset to Defaults</button>
+          </div>
+          <p id="save-status" class="mt-2 text-sm font-medium text-green-600 hidden">Parameters saved successfully!</p>
         </div>
-        <p id="shark-description" class="text-sm text-gray-600 transition-all duration-300 ease-in-out">Select a shark to view its description.</p>
       </div>
+
     </div>
-
-    <div id="habitat-section" class="bg-white p-4 rounded-lg shadow-lg">
-      <h3 id="habitat-toggle" class="text-lg font-bold mb-2 text-gray-700 cursor-pointer flex justify-between items-center hover:text-blue-600 transition duration-150">
-        Adjust Habitat Parameters
-        <span id="toggle-icon" class="text-xl leading-none">▼</span>
-      </h3>
-
-      <div id="habitat-content">
-        <form id="shark-params-form" class="space-y-2"></form>
-
-        <div class="mt-4 pt-4 border-t border-gray-900/10 flex flex-col sm:flex-row gap-3">
-          <button id="save-params-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-150 ease-in-out">Save Custom Parameters</button>
-          <button id="set-default-btn" class="w-full sm:w-auto bg-transparent hover:bg-red-500 border border-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-150 ease-in-out">Reset to Defaults</button>
-        </div>
-        <p id="save-status" class="mt-2 text-sm font-medium text-green-600 hidden">Parameters saved successfully!</p>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -589,7 +676,6 @@
       }
     });
   });
-
 </script>
 </body>
 </html>

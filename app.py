@@ -84,54 +84,54 @@ TIME_START = pd.to_datetime("2025-08-08")
 TIME_END = pd.to_datetime("2025-08-28")
 
 # File mapping (kept for context, no change needed)
-# FILE_MAP = {
-#     # ... (Your existing FILE_MAP data) ...
-#     '2025-08-08': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-#     '2025-08-09': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-#     '2025-08-10': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-#     '2025-08-11': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-#     '2025-08-12': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-#     '2025-08-13': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-#     '2025-08-14': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
-#     '2025-08-15': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-#     '2025-08-16': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-#     '2025-08-17': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-#     '2025-08-18': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-#     '2025-08-19': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-#     '2025-08-20': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-#     '2025-08-21': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
-#     '2025-08-22': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-#     '2025-08-23': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-#     '2025-08-24': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-#     '2025-08-25': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-#     '2025-08-26': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-#     '2025-08-27': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-#     '2025-08-28': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
-# }
 FILE_MAP = {
     # ... (Your existing FILE_MAP data) ...
-    '2025-08-08': ('AQUA_MODIS.20250808.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250808.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-09': ('AQUA_MODIS.20250809.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250809.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-10': ('AQUA_MODIS.20250810.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250810.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-11': ('AQUA_MODIS.20250811.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250811.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-12': ('AQUA_MODIS.20250812.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250812.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-13': ('AQUA_MODIS.20250813.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250813.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-14': ('AQUA_MODIS.20250814.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250814.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-15': ('AQUA_MODIS.20250815.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250815.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-16': ('AQUA_MODIS.20250816.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250816.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-17': ('AQUA_MODIS.20250817.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250817.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-18': ('AQUA_MODIS.20250818.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250818.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-19': ('AQUA_MODIS.20250819.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250819.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-20': ('AQUA_MODIS.20250820.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250820.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-21': ('AQUA_MODIS.20250821.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250821.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-22': ('AQUA_MODIS.20250822.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250822.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-23': ('AQUA_MODIS.20250823.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250823.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-24': ('AQUA_MODIS.20250824.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250824.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-25': ('AQUA_MODIS.20250825.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250825.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-26': ('AQUA_MODIS.20250826.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250826.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-27': ('AQUA_MODIS.20250827.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250827.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
-    '2025-08-28': ('AQUA_MODIS.20250828.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250828.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+    '2025-08-08': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+    '2025-08-09': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+    '2025-08-10': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+    '2025-08-11': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+    '2025-08-12': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+    '2025-08-13': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+    '2025-08-14': ('AQUA_MODIS.20250805_20250812.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250805_20250812.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250808_20250814.nc'),
+    '2025-08-15': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+    '2025-08-16': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+    '2025-08-17': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+    '2025-08-18': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+    '2025-08-19': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+    '2025-08-20': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+    '2025-08-21': ('AQUA_MODIS.20250813_20250820.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250813_20250820.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250815_20250821.nc'),
+    '2025-08-22': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+    '2025-08-23': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+    '2025-08-24': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+    '2025-08-25': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+    '2025-08-26': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+    '2025-08-27': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
+    '2025-08-28': ('AQUA_MODIS.20250821_20250828.L3m.8D.CHL.chlor_a.4km.NRT.nc', 'AQUA_MODIS.20250821_20250828.L3m.8D.SST.sst.4km.nc', 'nrt_global_allsat_phy_l4_20250822_20250828.nc'),
 }
+# FILE_MAP = {
+#     # ... (Your existing FILE_MAP data) ...
+#     '2025-08-08': ('AQUA_MODIS.20250808.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250808.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-09': ('AQUA_MODIS.20250809.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250809.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-10': ('AQUA_MODIS.20250810.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250810.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-11': ('AQUA_MODIS.20250811.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250811.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-12': ('AQUA_MODIS.20250812.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250812.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-13': ('AQUA_MODIS.20250813.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250813.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-14': ('AQUA_MODIS.20250814.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250814.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-15': ('AQUA_MODIS.20250815.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250815.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-16': ('AQUA_MODIS.20250816.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250816.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-17': ('AQUA_MODIS.20250817.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250817.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-18': ('AQUA_MODIS.20250818.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250818.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-19': ('AQUA_MODIS.20250819.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250819.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-20': ('AQUA_MODIS.20250820.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250820.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-21': ('AQUA_MODIS.20250821.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250821.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-22': ('AQUA_MODIS.20250822.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250822.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-23': ('AQUA_MODIS.20250823.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250823.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-24': ('AQUA_MODIS.20250824.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250824.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-25': ('AQUA_MODIS.20250825.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250825.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-26': ('AQUA_MODIS.20250826.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250826.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-27': ('AQUA_MODIS.20250827.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250827.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+#     '2025-08-28': ('AQUA_MODIS.20250828.L3m.DAY.CHL.chlor_a.4km.nc', 'AQUA_MODIS.20250828.L3m.DAY.SST.sst.4km.nc', 'cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D_1759545339589.nc'),
+# }
 
 BATHY_FILE = os.path.join(DATA_DIR, "GEBCO_2025_sub_ice.nc")
 
@@ -326,9 +326,21 @@ def calculate_hsi():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/tag',  methods=["GET"])
+def tag():
+    return render_template('st-component/index.html')
+
+@app.route('/about',  methods=["GET"])
+def about():
+    return render_template('about.html')
+
 @app.route('/',  methods=["GET"])
+def hero():
+    return render_template('hero.html')
+
+@app.route('/map',  methods=["GET"])
 def index():
-    return render_template('index.html')
+    return render_template('map.html')
 
 # -----------------------------
 # RUN

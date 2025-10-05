@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Shark Habitat Suitability</title>
+    <script src="https://cdn.tailwindcss.com  "></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: '#1e40af',
+                        shark: '#0f172a',
+                        plankton: '#22c55e',
+                        satellite: '#8b5cf6',
+                        eddy: '#f97316'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e40af);
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .question-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+            border-color: rgba(148, 163, 184, 0.4);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .answer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .answer-content.open {
+            max-height: 1000px;
+        }
+
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .math-formula {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .explore-btn {
+            background: linear-gradient(90deg, #22c55e, #0ea5e9);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .data-source {
+            background: rgba(14, 165, 233, 0.15);
+            border-left: 4px solid #0ea5e9;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .shark-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- Header -->
+<header class="py-6 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <h1 class="text-2xl font-bold">NASA Shark Habitat Suitability</h1>
+        </div>
+        <nav class="hidden md:flex space-x-8">
+            <a href="/map" class="hover:text-satellite transition">HSI Map</a>
+            <a href="/about" class="hover:text-satellite transition">About</a>
+        </nav>
+        <button class="md:hidden text-2xl">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="py-16 md:py-24 px-4 text-center">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Tracking Sharks with NASA Data</h1>
+        <p class="text-xl md:text-2xl mb-8 text-slate-300">Using satellite oceanography to predict shark foraging habitats</p>
+        <a href="#explore" class="explore-btn inline-block">Explore the Product</a>
+    </div>
+</section>
+
+<!-- Data Sources Section -->
+<section class="section bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center">NASA Data Sources</h2>
+
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="data-source">
+                <h3 class="text-xl font-semibold mb-3 flex items-center">
+                    <i class="fas fa-satellite text-satellite mr-2"></i> MODIS (Aqua)
+                </h3>
+                <p>Measures sea surface temperature (SST) and chlorophyll-a concentration to track ocean productivity</p>
+            </div>
+
+            <div class="data-source">
+                <h3 class="text-xl font-semibold mb-3 flex items-center">
+                    <i class="fas fa-water text-plankton mr-2"></i> SWOT (Altimetry)
+                </h3>
+                <p>Provides sea surface height anomalies (SSHa) to identify oceanographic features like eddies</p>
+            </div>
+
+            <div class="data-source">
+                <h3 class="text-xl font-semibold mb-3 flex items-center">
+                    <i class="fas fa-mountain text-eddy mr-2"></i> GEBCO Bathymetry
+                </h3>
+                <p>Global elevation model providing seafloor depth measurements</p>
+            </div>
+        </div>
+
+        <div class="svg-container">
+            <svg width="800" height="400" viewBox="0 0 800 400" class="w-full max-w-4xl">
+                <!-- Ocean background -->
+                <rect width="800" height="400" fill="#1e40af" />
+
+                <!-- Bathymetry -->
+                <path d="M0,300 Q200,250 400,280 Q600,220 800,260 L800,400 L0,400 Z" fill="#0c4a6e" />
+
+                <!-- Water layers -->
+                <path d="M0,250 Q200,200 400,230 Q600,170 800,210 L800,400 L0,400 Z" fill="#3b82f6" opacity="0.7" />
+                <path d="M0,200 Q200,150 400,180 Q600,120 800,160 L800,400 L0,400 Z" fill="#60a5fa" opacity="0.5" />
+
+                <!-- Chlorophyll layers -->
+                <path d="M0,180 Q200,130 400,160 Q600,100 800,140 L800,400 L0,400 Z" fill="#22c55e" opacity="0.2" />
+
+                <!-- Anticyclonic eddy -->
+                <circle cx="500" cy="180" r="80" fill="none" stroke="#f97316" stroke-width="3" stroke-dasharray="5,5" />
+                <path d="M420,180 Q500,100 580,180 Q500,260 420,180" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="5,5" />
+
+                <!-- Satellite -->
+                <g transform="translate(200,80)">
+                    <rect x="-20" y="-10" width="40" height="20" fill="#8b5cf6" rx="3" />
+                    <polygon points="-10,-10 -25,-25 -10,-20" fill="#a78bfa" />
+                    <polygon points="10,-10 25,-25 10,-20" fill="#a78bfa" />
+                    <circle cx="0" cy="0" r="3" fill="#fbbf24" />
+                    <line x1="0" y1="0" x2="0" y2="-40" stroke="#94a3b8" stroke-width="2" />
+                </g>
+
+
+
+                <!-- Plankton particles -->
+                <circle cx="300" cy="150" r="3" fill="#22c55e" />
+                <circle cx="320" cy="160" r="2" fill="#22c55e" />
+                <circle cx="310" cy="140" r="2" fill="#22c55e" />
+                <circle cx="330" cy="145" r="3" fill="#22c55e" />
+                <circle cx="340" cy="155" r="2" fill="#22c55e" />
+
+                <!-- Temperature gradient -->
+                <defs>
+                    <linearGradient id="tempGrad" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0%" stop-color="#0ea5e9" />
+                        <stop offset="50%" stop-color="#f97316" />
+                        <stop offset="100%" stop-color="#ef4444" />
+                    </linearGradient>
+                </defs>
+                <rect x="100" y="50" width="200" height="20" fill="url(#tempGrad)" rx="10" />
+                <text x="100" y="45" fill="#f1f5f9" font-size="14">Temperature Gradient (°C)</text>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<!-- Q&A Section -->
+<section class="section bg-slate-800">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+
+        <div class="mb-10">
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="text-xl font-semibold">How do sharks use oceanographic features for hunting?</h3>
+                    <i class="fas fa-chevron-down text-satellite"></i>
+                </div>
+                <div class="answer-content">
+                    <p class="mt-4">Sharks, particularly white sharks, use anticyclonic eddies as hunting grounds. These rotating water masses create upwelling that brings nutrients to the surface, attracting prey species. The eddies also concentrate prey through convergent currents, making them highly efficient hunting areas.</p>
+                    <div class="svg-container mt-6">
+                        <svg width="400" height="200" viewBox="0 0 400 200">
+                            <!-- Eddy representation -->
+                            <circle cx="200" cy="100" r="80" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="5,3" />
+                            <path d="M120,100 Q200,20 280,100 Q200,180 120,100" fill="none" stroke="#f97316" stroke-width="2" />
+
+                            <!-- Current direction arrows -->
+                            <path d="M120,100 Q140,80 160,100" fill="none" stroke="#f97316" stroke-width="2" marker-end="url(#arrow)" />
+                            <path d="M280,100 Q260,120 240,100" fill="none" stroke="#f97316" stroke-width="2" marker-end="url(#arrow)" />
+
+                            <!-- Prey concentration -->
+                            <circle cx="180" cy="90" r="4" fill="#22c55e" />
+                            <circle cx="190" cy="85" r="3" fill="#22c55e" />
+                            <circle cx="200" cy="90" r="4" fill="#22c55e" />
+                            <circle cx="195" cy="100" r="3" fill="#22c55e" />
+                            <circle cx="185" cy="95" r="3" fill="#22c55e" />
+
+
+
+                            <defs>
+                                <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                                    <path d="M0,0 L6,3 L0,6 Z" fill="#f97316" />
+                                </marker>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="text-xl font-semibold">What environmental factors influence shark habitat suitability?</h3>
+                    <i class="fas fa-chevron-down text-satellite"></i>
+                </div>
+                <div class="answer-content">
+                    <p class="mt-4">Shark habitat suitability is determined by four key factors:</p>
+                    <ul class="mt-3 list-disc pl-6 space-y-2">
+                        <li><strong>Sea Surface Temperature (SST):</strong> Sharks are temperature-sensitive species that prefer specific thermal ranges</li>
+                        <li><strong>Chlorophyll-a Concentration:</strong> Indicates primary productivity and potential prey availability</li>
+                        <li><strong>Sea Surface Height Anomaly (SSHa):</strong> Identifies oceanographic features like eddies and fronts</li>
+                        <li><strong>Bathymetry (Depth):</strong> Determines suitable foraging depths for different species</li>
+                    </ul>
+
+                    <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="shark-card text-center">
+                            <i class="fas fa-temperature-high text-3xl text-satellite mb-2"></i>
+                            <h4 class="font-semibold">SST</h4>
+                            <p class="text-sm">15-22°C optimal</p>
+                        </div>
+                        <div class="shark-card text-center">
+                            <i class="fas fa-seedling text-3xl text-plankton mb-2"></i>
+                            <h4 class="font-semibold">Chl-a</h4>
+                            <p class="text-sm">0.2-2.0 mg/m³</p>
+                        </div>
+                        <div class="shark-card text-center">
+                            <i class="fas fa-water text-3xl text-ocean mb-2"></i>
+                            <h4 class="font-semibold">SSHa</h4>
+                            <p class="text-sm">0.05-0.2m</p>
+                        </div>
+                        <div class="shark-card text-center">
+                            <i class="fas fa-mountain text-3xl text-eddy mb-2"></i>
+                            <h4 class="font-semibold">Depth</h4>
+                            <p class="text-sm">20-200m</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="text-xl font-semibold">How is the Habitat Suitability Index (HSI) calculated?</h3>
+                    <i class="fas fa-chevron-down text-satellite"></i>
+                </div>
+                <div class="answer-content">
+                    <p class="mt-4">The HSI is calculated using a weighted linear combination of environmental preferences:</p>
+
+                    <div class="math-formula">
+                        HSI = w₁ × N(SST) + w₂ × N(Chl-a) + w₃ × N(SSHa) + w₄ × N(Depth)
+                    </div>
+
+                    <p class="mt-4">Where:</p>
+                    <ul class="mt-3 list-disc pl-6 space-y-2">
+                        <li><strong>w₁, w₂, w₃, w₄:</strong> Species-specific weights that sum to 1.0</li>
+                        <li><strong>N(X):</strong> Normalized preference function for each environmental variable</li>
+                        <li><strong>SST:</strong> Sea Surface Temperature</li>
+                        <li><strong>Chl-a:</strong> Chlorophyll-a concentration</li>
+                        <li><strong>SSHa:</strong> Sea Surface Height Anomaly</li>
+                        <li><strong>Depth:</strong> Bathymetric depth</li>
+                    </ul>
+
+                    <div class="mt-6">
+                        <h4 class="font-semibold mb-3">Example: Great White Shark Model</h4>
+                        <div class="math-formula">
+                            HSI = 0.35 × N(SST) + 0.10 × N(Chl-a) + 0.35 × N(SSHa) + 0.20 × N(Depth)
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                            <div class="bg-slate-900 p-3 rounded-lg">
+                                <p class="text-satellite font-semibold">SST Weight: 0.35</p>
+                                <p class="text-sm">Optimal: 15-22°C</p>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded-lg">
+                                <p class="text-plankton font-semibold">Chl-a Weight: 0.10</p>
+                                <p class="text-sm">Optimal: 0.2-2.0 mg/m³</p>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded-lg">
+                                <p class="text-ocean font-semibold">SSHa Weight: 0.35</p>
+                                <p class="text-sm">Optimal: 0.05-0.2m</p>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded-lg">
+                                <p class="text-eddy font-semibold">Depth Weight: 0.20</p>
+                                <p class="text-sm">Optimal: 20-200m</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="text-xl font-semibold">Why are white sharks temperature-sensitive?</h3>
+                    <i class="fas fa-chevron-down text-satellite"></i>
+                </div>
+                <div class="answer-content">
+                    <p class="mt-4">White sharks are endothermic, meaning they can regulate their body temperature above the surrounding water temperature. However, they still prefer specific thermal ranges for optimal physiological function:</p>
+
+                    <ul class="mt-3 list-disc pl-6 space-y-2">
+                        <li>They prefer water temperatures between 12-24°C (optimal 15-22°C)</li>
+                        <li>Colder waters require more energy to maintain body temperature</li>
+                        <li>Warmer waters may stress their physiological systems</li>
+                        <li>Temperature influences prey distribution and availability</li>
+                    </ul>
+
+                    <div class="svg-container mt-6">
+                        <svg width="400" height="200" viewBox="0 0 400 200">
+                            <!-- Temperature scale -->
+                            <rect x="50" y="150" width="300" height="20" fill="url(#tempScale)" rx="10" />
+
+                            <!-- Optimal range -->
+                            <rect x="125" y="150" width="150" height="20" fill="none" stroke="#22c55e" stroke-width="3" rx="10" />
+
+
+                            <!-- Labels -->
+                            <text x="50" y="145" fill="#f1f5f9" font-size="14">Cold</text>
+                            <text x="320" y="145" fill="#f1f5f9" font-size="14">Warm</text>
+                            <text x="190" y="190" fill="#22c55e" font-weight="bold">Optimal Range</text>
+
+                            <defs>
+                                <linearGradient id="tempScale" x1="0" x2="1" y1="0" y2="0">
+                                    <stop offset="0%" stop-color="#0ea5e9" />
+                                    <stop offset="50%" stop-color="#f97316" />
+                                    <stop offset="100%" stop-color="#ef4444" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="text-xl font-semibold">How do anticyclonic eddies enhance foraging opportunities?</h3>
+                    <i class="fas fa-chevron-down text-satellite"></i>
+                </div>
+                <div class="answer-content">
+                    <p class="mt-4">Anticyclonic eddies (rotating clockwise in the Northern Hemisphere) create favorable conditions for foraging:</p>
+
+                    <ul class="mt-3 list-disc pl-6 space-y-2">
+                        <li>They trap and concentrate prey through convergent currents</li>
+                        <li>Upwelling at the edges brings nutrients to the surface</li>
+                        <li>They create temperature gradients that attract different species</li>
+                        <li>Prey becomes disoriented in the rotating currents, making it easier to catch</li>
+                    </ul>
+
+                    <div class="svg-container mt-6">
+                        <svg width="400" height="300" viewBox="0 0 400 300">
+                            <!-- Eddy circle -->
+                            <circle cx="200" cy="150" r="100" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="5,3" />
+
+                            <!-- Current arrows -->
+                            <path d="M100,150 Q200,50 300,150" fill="none" stroke="#f97316" stroke-width="2" marker-end="url(#arrow)" />
+                            <path d="M300,150 Q200,250 100,150" fill="none" stroke="#f97316" stroke-width="2" marker-end="url(#arrow)" />
+
+                            <!-- Prey concentration -->
+                            <circle cx="180" cy="130" r="4" fill="#22c55e" />
+                            <circle cx="190" cy="125" r="3" fill="#22c55e" />
+                            <circle cx="200" cy="130" r="4" fill="#22c55e" />
+                            <circle cx="195" cy="140" r="3" fill="#22c55e" />
+                            <circle cx="185" cy="135" r="3" fill="#22c55e" />
+
+
+                            <text x="150" y="40" fill="#f1f5f9" font-weight="bold" font-size="16">Anticyclonic Eddy</text>
+                            <text x="120" y="280" fill="#f97316" font-weight="bold">Concentrated Prey</text>
+
+                            <defs>
+                                <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                                    <path d="M0,0 L6,3 L0,6 Z" fill="#f97316" />
+                                </marker>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Explore Section -->
+<section id="explore" class="section bg-gradient-to-b from-slate-800 to-slate-900 text-center">
+    <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold mb-6">Ready to Explore Shark Habitats?</h2>
+        <p class="text-xl mb-10 text-slate-300">Use our interactive tool to predict shark foraging areas based on NASA satellite data</p>
+        <a href="/map" class="explore-btn inline-block">Explore the Product</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 px-4 border-t border-slate-700">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <div class="flex items-center space-x-3">
+                    <h3 class="text-xl font-bold">NASA Shark Habitat Project</h3>
+                </div>
+                <p class="mt-2 text-slate-400">Tracking marine predators with satellite oceanography</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/arrov47" class="text-slate-400 hover:text-satellite transition">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+                <a href="https://github.com/AzimBB" class="text-slate-400 hover:text-satellite transition">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+
+            </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-slate-700 text-center text-slate-500 text-sm">
+            <p>© 2025 NASA Shark Habitat Suitability Project. This application uses NASA Earth Observing System data.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle question answers
+        const questionHeaders = document.querySelectorAll('.question-header');
+        questionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('i');
+
+                content.classList.toggle('open');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+
+        // Scroll to explore section
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

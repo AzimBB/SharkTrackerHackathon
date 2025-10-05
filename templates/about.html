@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - NASA Shark Habitat Suitability</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e40af);
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+            border-color: rgba(148, 163, 184, 0.4);
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(5px);
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #8b5cf6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid #0ea5e9;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(14, 165, 233, 0.3);
+            transform: scale(1.05);
+        }
+
+        .info-box {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            color: #2563eb;
+            transform: translateX(5px);
+        }
+
+        .explore-btn {
+            background: linear-gradient(90deg, #22c55e, #0ea5e9);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- Header -->
+<header class="py-6 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <h1 class="text-2xl font-bold">NASA Shark Habitat Suitability</h1>
+        </div>
+        <nav class="hidden md:flex space-x-8">
+            <a href="/map" class="hover:text-satellite transition">HSI Map</a>
+            <a href="/about" class="hover:text-satellite transition">About</a>
+        </nav>
+        <button class="md:hidden text-2xl">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="py-16 md:py-24 px-4 text-center">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">About Our Team</h1>
+        <p class="text-xl md:text-2xl mb-8 text-slate-300">Enthusiasts solving global NASA challenges with passion and expertise</p>
+        <a href="/" class="explore-btn inline-block">Return to Home</a>
+    </div>
+</section>
+
+<!-- About the Team Section -->
+<section class="section bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8">About the Team</h2>
+
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-4">We are enthusiasts who are interested in solving global NASA challenges and ready to tackle them by using our knowledge and experience that we owe.</h3>
+
+            <p class="mb-4">We are skilled in programming, developing apps, analyzing data, making robotics that will facilitate learning and researching, engineering with IoT devices, and we are strongly intrigued by the challenge related to the sharks; therefore, we are ready to make our best and contend with such challenge.</p>
+
+            <div class="info-box">
+                <h4 class="font-semibold mb-2">Team Information</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <strong>Local Event:</strong> Ashgabat, Turkmenistan
+                    </div>
+                    <div>
+                        <strong>Challenge:</strong> Sharks from Space
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <strong>Desired Skills & Interests:</strong>
+                    <div class="skills-container">
+                        <span class="skill-tag">Artificial Intelligence & Machine Learning</span>
+                        <span class="skill-tag">Coding</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Data Management</span>
+                        <span class="skill-tag">Data Visualization</span>
+                        <span class="skill-tag">Earth Science</span>
+                        <span class="skill-tag">Flora & Fauna</span>
+                        <span class="skill-tag">Forecasting</span>
+                        <span class="skill-tag">Habitats</span>
+                        <span class="skill-tag">Hardware</span>
+                        <span class="skill-tag">Manmade Satellites</span>
+                        <span class="skill-tag">Planets & Moons</span>
+                        <span class="skill-tag">Satellites</span>
+                        <span class="skill-tag">Software</span>
+                        <span class="skill-tag">Statistics</span>
+                        <span class="skill-tag">Web Development</span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <strong>Languages Spoken:</strong>
+                    <div class="skills-container">
+                        <span class="skill-tag">English</span>
+                        <span class="skill-tag">Other</span>
+                        <span class="skill-tag">Russian</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Members Section -->
+<section class="section bg-slate-800">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8">Meet Our Team</h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Team Member 1 -->
+            <div class="team-member">
+                <div>
+                    <h3 class="text-xl font-semibold">AzimBB</h3>
+                    <p class="text-slate-300 mb-2">Lead Developer & Data Analyst</p>
+                    <p class="mb-3">Specializes in satellite data processing and machine learning applications for marine biology research.</p>
+                    <a href="https://github.com/AzimBB" class="github-link">
+                        <i class="fab fa-github"></i> View GitHub Profile
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="team-member">
+                <div>
+                    <h3 class="text-xl font-semibold">arrov47</h3>
+                    <p class="text-slate-300 mb-2">Frontend Developer & Visualization Specialist</p>
+                    <p class="mb-3">Focuses on creating intuitive interfaces for complex scientific data visualization and user interaction.</p>
+                    <a href="https://github.com/arrov47" class="github-link">
+                        <i class="fab fa-github"></i> View GitHub Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- About the Challenge Section -->
+<section class="section bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8">About the Challenge</h2>
+
+        <div class="card">
+            <h3 class="text-xl font-semibold mb-4">Earth's ocean is one of the most powerful habitats in our universe, supporting a range of life that sustains ecosystems and habitability across the globe.</h3>
+
+            <p class="mb-4">It is common to measure photosynthetic activity in the ocean from space, but far more challenging to track top predators. Your challenge is to create a mathematical framework for identifying sharks and predicting their foraging habitats using NASA satellite data, and also to suggest a new conceptual model of a tag (a small electronic device that can be attached to an animal to track and study its movement) that could measure not only where sharks are, but also what they are eating, and in real time transmit that data back to users to enable development of predictive models. (Earth Science Division)</p>
+
+            <div class="mt-6">
+                <h4 class="font-semibold mb-3">Our Approach</h4>
+                <p>We're using NASA satellite data including MODIS for sea surface temperature and chlorophyll-a concentration, SWOT for sea surface height anomalies, and GEBCO bathymetry data to create a comprehensive habitat suitability index for various shark species.</p>
+
+                <div class="mt-4">
+                    <h5 class="font-medium mb-2">Key Technologies Used:</h5>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Python with Flask for backend processing</li>
+                        <li>JavaScript with Leaflet for interactive mapping</li>
+                        <li>Xarray for handling multi-dimensional scientific data</li>
+                        <li>Machine learning algorithms for pattern recognition</li>
+                        <li>Real-time data visualization techniques</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Explore Section -->
+<section class="section bg-gradient-to-b from-slate-800 to-slate-900 text-center">
+    <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold mb-6">Ready to Explore Shark Habitats?</h2>
+        <p class="text-xl mb-10 text-slate-300">Use our interactive tool to predict shark foraging areas based on NASA satellite data</p>
+        <a href="/map" class="explore-btn inline-block">Explore the Product</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 px-4 border-t border-slate-700">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <div class="flex items-center space-x-3">
+
+                    <h3 class="text-xl font-bold">NASA Shark Habitat Project</h3>
+                </div>
+                <p class="mt-2 text-slate-400">Tracking marine predators with satellite oceanography</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/AzimBB" class="text-slate-400 hover:text-satellite transition">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+                <a href="https://github.com/arrov47" class="text-slate-400 hover:text-satellite transition">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+            </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-slate-700 text-center text-slate-500 text-sm">
+            <p>© 2025 NASA Shark Habitat Suitability Project. This application uses NASA Earth Observing System data.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

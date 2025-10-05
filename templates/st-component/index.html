@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker Suggestion | Marine Technology</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/components/tracker-suggestion.css">
+    <link rel="stylesheet" href="/static/css/components/categories.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base styles and custom overrides */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Removed overflow: hidden; to allow scrolling */
+        }
+        #map {
+            /* Reduced height to accommodate content above */
+            position: absolute;
+            top: 80px; /* Start below the navbar */
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 40vh; /* Set to 40% of viewport height */
+            z-index: 0;
+        }
+        .legend-bar {
+            height: 12px;
+            width: 100%; /* The container will set the actual width */
+            border-radius: 9999px;
+            background: linear-gradient(to right, violet, blue, cyan, yellow, orange, red);
+        }
+        /* Fade-in animation for status messages */
+        .status-message {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom scrollbar for the collapsible panel */
+        #panel-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        #panel-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #panel-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* slate-300 */
+            border-radius: 3px;
+        }
+        #panel-body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; /* slate-400 */
+        }
+
+        /* --- START: Replace the previous CSS with this updated version --- */
+        @media (min-width: 640px) { /* Corresponds to Tailwind's 'sm' breakpoint */
+            /*
+              By triggering the hover on the stable parent '.shark-details-box',
+              we create a consistent hover area that doesn't change size,
+              preventing the flickering effect.
+            */
+            .shark-details-box .flex-col {
+                /* Target the inner flex container and change its layout on hover */
+                flex-direction: column;
+            }
+
+            /* Target the children when the stable parent is hovered */
+            .shark-details-box #shark-image-placeholder {
+                width: 100%;
+                height: 12rem; /* 192px */
+            }
+
+            .shark-details-box #shark-description {
+                margin-top: 0.5rem;
+            }
+        }
+        /* --- END: Updated CSS for hover effect --- */
+
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(25, 25, 35, 0.95);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: #4ecca3;
+            font-size: 1.8rem;
+        }
+
+        .logo h1 {
+            color: #f8f9fa;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #f8f9fa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #4ecca3;
+            background: rgba(78, 204, 163, 0.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #4ecca3;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Adjust main content to account for navbar */
+        .main-content {
+            margin-top: 80px; /* Height of navbar */
+        }
+    </style>
+    <style>
+        .external-link-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 16px;
+            color: #4a90e2;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #4a90e2;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subcategory-card:hover .external-link-icon {
+            transform: scale(1.1);
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Ensure icons don't appear in category headers */
+        /* .category-header .external-link-icon {
+            display: none;
+        } */
+
+        /* Third-party links section */
+        .third-party-links {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6f0fa 100%);
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+
+        .third-party-links .container {
+            max-width: 1000px;
+        }
+
+        .third-party-links h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .third-party-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .link-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e6ed;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .link-domain {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: 1rem;
+        }
+
+        .link-icon {
+            display: inline-block;
+            font-size: 18px;
+            color: #4a90e2;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .link-item:hover .link-icon {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<div class="navbar">
+    <div class="logo">
+        <i class="fas fa-fish"></i>
+        <h1>Sharks Trackers</h1>
+    </div>
+    <div class="nav-links">
+        <a href="/"><i class="fas fa-home mr-2"></i>Home</a>
+        <a href="#"><i class="fas fa-tags mr-2"></i>Tag Preview</a>
+        <a href="/about"><i class="fas fa-info-circle mr-2"></i>About Us</a>
+    </div>
+</div>
+
+<main class="tracker-suggestion-main">
+    <!-- Updated Hero Section -->
+    <section class="suggestion-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Tracker Suggestion</h1>
+                <p class="hero-subtitle">Explore what kind of modules we recommend to use for tracking sharks</p>
+                <div class="hero-visual">
+                    <div class="shark-icon">🦈</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="categories-title">Devices that will facilitate researching and tracking sharks</h2>
+
+            <!-- Bio-modules -->
+            <div class="category-row">
+                <div class="category-header">
+                    <h3>Bio-module(s)</h3>
+                </div>
+                <div class="subcategory-grid">
+                    <div class="subcategory-card" data-category="bio-modules" data-subcategory="sase" data-url="https://www.soop-platform.earth/measurement-technology/sase-edna-sampler/">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Bio-modules/1.png" alt="SASe Subsurface Automated eDNA Sampler" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">SASe Subsurface Automated eDNA Sampler</h4>
+                            <p class="card-description">Advanced automated system for collecting environmental DNA samples from subsurface marine environments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Energy-harvesting-modules -->
+            <div class="category-row">
+                <div class="category-header">
+                    <h3>Energy-harvesting-modules</h3>
+                </div>
+                <div class="subcategory-grid">
+                    <div class="subcategory-card" data-category="energy-harvesting" data-subcategory="water-turbine" data-url="https://www.ato.com/5v-water-turbine?">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Energy-harvesting-modules/1.png" alt="5V DC Micro Water Turbine Generator" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">5V DC Micro Water Turbine Generator</h4>
+                            <p class="card-description">Compact water turbine for generating power from marine currents.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="energy-harvesting" data-subcategory="solar-panel" data-url="https://voltaicsystems.com/P126/">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Energy-harvesting-modules/2.jpg" alt="2 Watt 6 Volt Small Solar Panel" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">2 Watt 6 Volt Small Solar Panel</h4>
+                            <p class="card-description">Efficient solar panel for marine applications with weather-resistant coating.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="energy-harvesting" data-subcategory="piezoelectric" data-url="https://piezo.com/products/piezoelectric-bending-transducer-s452-j1fr-1808xb">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Energy-harvesting-modules/3.png" alt="S452-J1FR-1808XB Piezoelectric Bending Transducer" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">S452-J1FR-1808XB Piezoelectric Bending Transducer</h4>
+                            <p class="card-description">Advanced piezoelectric device for harvesting energy from mechanical vibrations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location-modules -->
+            <div class="category-row">
+                <div class="category-header">
+                    <h3>Location-modules</h3>
+                </div>
+                <div class="subcategory-grid">
+                    <div class="subcategory-card" data-category="location" data-subcategory="seatrkr" data-url="https://www.telonics.com/products/gps4Marine/seatrkr.php?">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/location-modules/1.png" alt="SeaTrkr GPS/Iridium Marine Systems" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">SeaTrkr GPS/Iridium Marine Systems</h4>
+                            <p class="card-description">Reliable GPS and Iridium satellite communication for marine tracking.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="location" data-subcategory="spot" data-url="https://wildlifecomputers.com/spot-tag-product-sheet-spot-257/">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/location-modules/2.png" alt="SPOT-257" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">SPOT-257</h4>
+                            <p class="card-description">Compact satellite messenger for emergency communication and tracking.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="location" data-subcategory="neo-m8" data-url="https://www.u-blox.com/en/product/neo-m8-series?">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/location-modules/3.webp" alt="NEO-M8 series" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">NEO-M8 series</h4>
+                            <p class="card-description">High-performance GPS/GNSS receiver modules for precise location tracking.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motion-modules -->
+            <div class="category-row">
+                <div class="category-header">
+                    <h3>Motion-modules</h3>
+                </div>
+                <div class="subcategory-grid">
+                    <div class="subcategory-card" data-category="motion" data-subcategory="axy" data-url="https://www.technosmart.eu/axy-5-xs/">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Motion-modules/1.webp" alt="Axy 5 XS" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">Axy 5 XS</h4>
+                            <p class="card-description">Miniature 3D acceleration logger for animal behavior studies.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="motion" data-subcategory="cats" data-url="https://cats.is/cats-diary/">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Motion-modules/2.png" alt="CATS Mini Diary" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">CATS Mini Diary (CATS — Customized Animal Tracking Solutions)</h4>
+                            <p class="card-description">Customized animal tracking solutions for comprehensive behavioral analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision-modules -->
+            <div class="category-row">
+                <div class="category-header">
+                    <h3>Vision-modules</h3>
+                </div>
+                <div class="subcategory-grid">
+                    <div class="subcategory-card" data-category="vision" data-subcategory="imagenex-852" data-url="https://imagenex.com/products/852-ultra-miniature-imaging">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Vision-modules/1.jpg" alt="852 Ultra-Miniature Imaging" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">852 Ultra-Miniature Imaging ULTRA-MINIATURE SCANNING SONAR</h4>
+                            <p class="card-description">Compact scanning sonar for detailed underwater imaging applications.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="vision" data-subcategory="ping360" data-url="https://bluerobotics.com/store/sonars/imaging-sonars/ping360-sonar-r1-rp/">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Vision-modules/2.jpg" alt="PING360-SONAR-R1-RP-1" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">PING360-SONAR-R1-RP-1</h4>
+                            <p class="card-description">360-degree sonar for comprehensive underwater environment mapping.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="vision" data-subcategory="imagenex-852-gs" data-url="https://imagenex.com/products/852-gs">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Vision-modules/3.jpg" alt="Imagenex 852-GS" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">Imagenex 852-GS</h4>
+                            <p class="card-description">Advanced sonar system for underwater imaging and detection.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="vision" data-subcategory="fd-1203" data-url="https://fulldepthrov.en.made-in-china.com/product/KAQRWVTYashc/China-Fd-1203-Advanced-Forward-Looking-Multi-Beam-Imaging-Sonar-System-for-Marine-Exploration.html?">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Vision-modules/4.png" alt="Fd 1203 Advanced Forward-Looking Multi-Beam Imaging Sonar System" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">Fd 1203 Advanced Forward-Looking Multi-Beam Imaging Sonar System for Marine Exploration</h4>
+                            <p class="card-description">Multi-beam sonar for advanced marine exploration and mapping.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="vision" data-subcategory="omniscan" data-url="https://ceruleansonar.com/product/omniscan-450ss-450ss-blueboat/">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Vision-modules/5.jpeg" alt="Omniscan 450SS & 450SS BlueBoat" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">Omniscan 450SS & 450SS BlueBoat</h4>
+                            <p class="card-description">High-resolution sonar systems for underwater vehicle applications.</p>
+                        </div>
+                    </div>
+
+                    <div class="subcategory-card" data-category="vision" data-subcategory="m900" data-url="https://www.sokkia.com.tw/pdf/70036/M900%20Series%202D%20Product%20%E5%9E%8B%E9%8C%84.pdf?">
+                        <!-- <span class="external-link-icon">↗</span> -->
+                        <img src="/static/images/Vision-modules/6.png" alt="M900 Series 2D Imaging Sonar" class="card-image">
+                        <div class="card-content">
+                            <h4 class="card-title">M900 Series 2D Imaging Sonar</h4>
+                            <p class="card-description">High-performance 2D imaging sonar for marine and underwater applications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Third-party links section -->
+    <section class="third-party-links">
+        <div class="container">
+            <h3>Third-Party Resources</h3>
+            <div class="links-grid">
+                <a href="https://imagenex.com" target="_blank" class="link-item">
+                    <span class="link-domain">imagenex.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://bluerobotics.com" target="_blank" class="link-item">
+                    <span class="link-domain">bluerobotics.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://fulldepthrov.en.made-in-china.com" target="_blank" class="link-item">
+                    <span class="link-domain">fulldepthrov.en.made-in-china.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://ceruleansonar.com" target="_blank" class="link-item">
+                    <span class="link-domain">ceruleansonar.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.sokkia.com.tw/" target="_blank" class="link-item">
+                    <span class="link-domain">www.sokkia.com.tw</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.technosmart.eu/axy-5-xs/" target="_blank" class="link-item">
+                    <span class="link-domain">www.technosmart.eu</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://cats.is/cats-diary/" target="_blank" class="link-item">
+                    <span class="link-domain">cats.is</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.telonics.com/products/gps4Marine/seatrkr.php?" target="_blank" class="link-item">
+                    <span class="link-domain">www.telonics.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://wildlifecomputers.com/spot-tag-product-sheet-spot-257/" target="_blank" class="link-item">
+                    <span class="link-domain">wildlifecomputers.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.u-blox.com/en/product/neo-m8-series?" target="_blank" class="link-item">
+                    <span class="link-domain">www.u-blox.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.ato.com/5v-water-turbine?" target="_blank" class="link-item">
+                    <span class="link-domain">www.ato.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://voltaicsystems.com/P126/" target="_blank" class="link-item">
+                    <span class="link-domain">voltaicsystems.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://piezo.com/products/piezoelectric-bending-transducer-s452-j1fr-1808xb" target="_blank" class="link-item">
+                    <span class="link-domain">piezo.com</span>
+                    <span class="link-icon">↗</span>
+                </a>
+                <a href="https://www.soop-platform.earth/measurement-technology/sase-edna-sampler/" target="_blank" class="link-item">
+                    <span class="link-domain">www.soop-platform.earth</span>
+                    <span class="link-icon">↗</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="map"></div>
+<footer class="main-footer">
+    <!-- Footer content -->
+</footer>
+
+<script src="/static/js/main.js"></script>
+<script src="/static/js/components/category-filter.js"></script>
+</body>
+</html>
