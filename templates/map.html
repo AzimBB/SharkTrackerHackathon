@@ -251,27 +251,30 @@
       description: "The world's largest predatory fish, known for its powerful presence in coastal and offshore waters worldwide, preferring temperate to tropical waters.",
       image: "https://upload.wikimedia.org/wikipedia/commons/5/56/White_shark.jpg",
       params: {
-        SST: { name: "Sea Surface Temp (°C)", weight: 0.4, optimal_min: 12, optimal_max: 24, tolerance_min: 10, tolerance_max: 28, unit: "°C" },
-        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.3, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 3.0, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 5, optimal_max: 100, tolerance_min: 0, tolerance_max: 1200, unit: "m" }
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.35, optimal_min: 12, optimal_max: 24, tolerance_min: 10, tolerance_max: 28, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.1, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 3.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.2, optimal_min: 5, optimal_max: 100, tolerance_min: 0, tolerance_max: 1200, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.35, optimal_min: 0.05, optimal_max:  0.2, tolerance_min: -0.1, tolerance_max: 0.3, unit: "m" }
       }
     },
     'Tiger Shark': {
       description: "A large macropredator found in tropical and temperate ocean waters, often frequenting shallow reefs and lagoons. Known for its distinct stripes.",
       image: "https://upload.wikimedia.org/wikipedia/commons/3/39/Tiger_shark.jpg",
       params: {
-        SST: { name: "Sea Surface Temp (°C)", weight: 0.5, optimal_min: 22, optimal_max: 30, tolerance_min: 18, tolerance_max: 32, unit: "°C" },
-        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.2, optimal_min: 0.05, optimal_max: 0.8, tolerance_min: 0.01, tolerance_max: 2.5, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 1, optimal_max: 50, tolerance_min: 0, tolerance_max: 800, unit: "m" }
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.4, optimal_min: 22, optimal_max: 30, tolerance_min: 18, tolerance_max: 32, unit: "°C" },
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.1, optimal_min: 0.05, optimal_max: 0.8, tolerance_min: 0.01, tolerance_max: 2.5, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 1, optimal_max: 50, tolerance_min: 0, tolerance_max: 800, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.20, optimal_min: 0.05, optimal_max:  0.2, tolerance_min: -0.1, tolerance_max:  0.3, unit: "m" }
       }
     },
     'Whale Shark': {
       description: "The largest fish in the sea, a filter-feeder found in open waters of tropical oceans. They are highly migratory, following plankton blooms.",
       image: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Whale-shark-enhanced.jpg",
       params: {
-        SST: { name: "Sea Surface Temp (°C)", weight: 0.6, optimal_min: 25, optimal_max: 30, tolerance_min: 21, tolerance_max: 32, unit: "°C" },
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.3, optimal_min: 25, optimal_max: 30, tolerance_min: 21, tolerance_max: 32, unit: "°C" },
         ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.4, optimal_min: 0.5, optimal_max: 5.0, tolerance_min: 0.2, tolerance_max: 10.0, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.0, optimal_min: 0, optimal_max: 9999, tolerance_min: 0, tolerance_max: 9999, unit: "m" }
+        Bathymetry: { name: "Depth (m)", weight: 0.2, optimal_min: 0, optimal_max: 9999, tolerance_min: 0, tolerance_max: 9999, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.10, optimal_min: 0.05, optimal_max: 0.2, tolerance_min: -0.1, tolerance_max: 0.3, unit: "m" }
       }
     },
     'Oceanic Whitetip Shark': {
@@ -280,7 +283,8 @@
       params: {
         SST: { name: "Sea Surface Temp (°C)", weight: 0.5, optimal_min: 20, optimal_max: 28, tolerance_min: 18, tolerance_max: 30, unit: "°C" },
         ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.3, optimal_min: 0.01, optimal_max: 0.5, tolerance_min: 0.0, tolerance_max: 1.5, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.2, optimal_min: 200, optimal_max: 500, tolerance_min: 50, tolerance_max: 2000, unit: "m" }
+        Bathymetry: { name: "Depth (m)", weight: 0.2, optimal_min: 200, optimal_max: 500, tolerance_min: 50, tolerance_max: 2000, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.40, optimal_min: 0.050, optimal_max: 0.20, tolerance_min: -0.10, tolerance_max: 0.3, unit: "m" }
       }
     },
     'Bull Shark': {
@@ -288,8 +292,9 @@
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Requin_bouledogue_%28Carcharhinus_leucas%29_%28Ifremer_00813-92510_-_53587%29.jpg/1280px-Requin_bouledogue_%28Carcharhinus_leucas%29_%28Ifremer_00813-92510_-_53587%29.jpg",
       params: {
         SST: { name: "Sea Surface Temp (°C)", weight: 0.4, optimal_min: 20, optimal_max: 28, tolerance_min: 18, tolerance_max: 30, unit: "°C" },
-        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.3, optimal_min: 0.5, optimal_max: 3.0, tolerance_min: 0.1, tolerance_max: 6.0, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 1, optimal_max: 50, tolerance_min: 0, tolerance_max: 200, unit: "m" }
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.2, optimal_min: 0.5, optimal_max: 3.0, tolerance_min: 0.1, tolerance_max: 6.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 1, optimal_max: 50, tolerance_min: 0, tolerance_max: 200, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.1, optimal_min: 0.05, optimal_max: 0.2, tolerance_min: -0.1, tolerance_max: 0.3, unit: "m" }
       }
     },
     'Greenland Shark': {
@@ -297,17 +302,19 @@
       image: "https://upload.wikimedia.org/wikipedia/commons/7/77/Somniosus_microcephalus_okeanos.jpg",
       params: {
         SST: { name: "Sea Surface Temp (°C)", weight: 0.2, optimal_min: -1.8, optimal_max: 5.0, tolerance_min: -2.0, tolerance_max: 10.0, unit: "°C" },
-        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.1, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 3.0, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.7, optimal_min: 400, optimal_max: 1500, tolerance_min: 200, tolerance_max: 3000, unit: "m" }
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.05, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 3.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.7, optimal_min: 400, optimal_max: 1500, tolerance_min: 200, tolerance_max: 3000, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.05, optimal_min: 0.0, optimal_max: 0.0, tolerance_min: -0.1, tolerance_max: 0.1, unit: "m" }
       }
     },
     'Reef Shark': {
       description: "Commonly refers to several species like the Blacktip or Caribbean Reef Shark. They are typically found in shallow tropical waters around coral reefs.",
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Caribbean_Reef_Shark_at_North_Dry_Rocks%2C_Key_Largo.jpg/1024px-Caribbean_Reef_Shark_at_North_Dry_Rocks%2C_Key_Largo.jpg",
       params: {
-        SST: { name: "Sea Surface Temp (°C)", weight: 0.45, optimal_min: 24, optimal_max: 28, tolerance_min: 22, tolerance_max: 30, unit: "°C" },
+        SST: { name: "Sea Surface Temp (°C)", weight: 0.40, optimal_min: 24, optimal_max: 28, tolerance_min: 22, tolerance_max: 30, unit: "°C" },
         ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.05, optimal_min: 0.1, optimal_max: 1.0, tolerance_min: 0.05, tolerance_max: 2.0, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.5, optimal_min: 10, optimal_max: 60, tolerance_min: 5, tolerance_max: 200, unit: "m" }
+        Bathymetry: { name: "Depth (m)", weight: 0.5, optimal_min: 10, optimal_max: 60, tolerance_min: 5, tolerance_max: 200, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.05, optimal_min: 0.05, optimal_max: 0.2, tolerance_min: -0.1, tolerance_max: 0.3, unit: "m" }
       }
     },
     'Shortfin Mako Shark': {
@@ -315,8 +322,9 @@
       image: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Isurus_oxyrinchus_by_mark_conlin2.JPG",
       params: {
         SST: { name: "Sea Surface Temp (°C)", weight: 0.45, optimal_min: 16, optimal_max: 25, tolerance_min: 12, tolerance_max: 28, unit: "°C" },
-        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.25, optimal_min: 0.1, optimal_max: 0.8, tolerance_min: 0.05, tolerance_max: 2.0, unit: "mg/m³" },
-        Bathymetry: { name: "Depth (m)", weight: 0.3, optimal_min: 100, optimal_max: 1000, tolerance_min: 50, tolerance_max: 2000, unit: "m" }
+        ChlorophyllA: { name: "Chlorophyll-a (mg/m³)", weight: 0.05, optimal_min: 0.1, optimal_max: 0.8, tolerance_min: 0.05, tolerance_max: 2.0, unit: "mg/m³" },
+        Bathymetry: { name: "Depth (m)", weight: 0.1, optimal_min: 100, optimal_max: 1000, tolerance_min: 50, tolerance_max: 2000, unit: "m" },
+        SSHa: { name: "Sea Surface Height anomaly (m)", weight: 0.40, optimal_min: 0.1, optimal_max: 0.3, tolerance_min: 0.0, tolerance_max: 0.4, unit: "m" }
       }
     }
   };

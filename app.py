@@ -41,6 +41,15 @@ SHARK_MODELS = {
             "Bathymetry": {"optimal": (20, 500), "tolerance": (5, 2000), "units": "m"}
         }
     },
+    'Oceanic Whitetip Shark': {
+        "weights": {"SST": 0.35, "ChlorophyllA": 0.1, "SSHa": 0.35, "Bathymetry": 0.20},
+        "preferences": {
+            "SST": {"optimal": (20, 28), "tolerance": (18, 30), "units": "°C"},
+            "ChlorophyllA": {"optimal": (0.01, 0.5), "tolerance": (0.00, 1.5), "units": "mg/m³"},
+            "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
+            "Bathymetry": {"optimal": (200, 500), "tolerance": (50, 2000), "units": "m"}
+        }
+    },
     "Bull Shark": {
         "weights": {"SST": 0.40, "ChlorophyllA": 0.20, "SSHa": 0.10, "Bathymetry": 0.30},
         "preferences": {
@@ -75,15 +84,6 @@ SHARK_MODELS = {
             "ChlorophyllA": {"optimal": (0.1, 0.6), "tolerance": (0.05, 1.5), "units": "mg/m³"},
             "SSHa": {"optimal": (0.1, 0.3), "tolerance": (0.0, 0.4), "units": "m"},
             "Bathymetry": {"optimal": (150, 2000), "tolerance": (50, 5000), "units": "m"}
-        }
-    },
-    'Oceanic Whitetip Shark': {
-        "weights": {"SST": 0.5, "ChlorophyllA": 0.3, "SSHa": 0.40, "Bathymetry": 0.20},
-        "preferences": {
-            "SST": {"optimal": (20, 28), "tolerance": (18, 30), "units": "°C"},
-            "ChlorophyllA": {"optimal": (0.01, 0.5), "tolerance": (0.00, 1.5), "units": "mg/m³"},
-            "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
-            "Bathymetry": {"optimal": (200, 500), "tolerance": (50, 2000), "units": "m"}
         }
     },
 }
@@ -212,7 +212,7 @@ def get_dataset_paths(date_str):
 def calculate_hsi():
     try:
         data = request.json
-        # print("User sent data: ", data)
+        print("User sent data: ", data)
 
         lat_min, lat_max = float(data["lat_min"]), float(data["lat_max"])
         lon_min, lon_max = float(data["lon_min"]), float(data["lon_max"])
@@ -310,7 +310,7 @@ def calculate_hsi():
         final_hsi = (
                 current_weights.get("SST", 0) * sst_norm +
                 current_weights.get("ChlorophyllA", 0) * chla_norm +
-                # current_weights.get("SSHa", 0) * ssha_norm +
+                current_weights.get("SSHa", 0) * ssha_norm +
                 current_weights.get("Bathymetry", 0) * depth_norm
         )
         # Remove any singleton dimensions (e.g. time dimension)
@@ -356,4 +356,4 @@ def index():
 # -----------------------------
 
 if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0", port=80)
+    app.run(debug=True, host="127.0.0.1", port=80)
