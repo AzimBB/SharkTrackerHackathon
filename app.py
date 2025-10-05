@@ -77,7 +77,18 @@ SHARK_MODELS = {
             "Bathymetry": {"optimal": (150, 2000), "tolerance": (50, 5000), "units": "m"}
         }
     },
+    'Oceanic Whitetip Shark': {
+        "weights": {"SST": 0.5, "ChlorophyllA": 0.3, "SSHa": 0.40, "Bathymetry": 0.20},
+        "preferences": {
+            "SST": {"optimal": (20, 28), "tolerance": (18, 30), "units": "°C"},
+            "ChlorophyllA": {"optimal": (0.01, 0.5), "tolerance": (0.00, 1.5), "units": "mg/m³"},
+            "SSHa": {"optimal": (0.05, 0.2), "tolerance": (-0.1, 0.3), "units": "m"},
+            "Bathymetry": {"optimal": (200, 500), "tolerance": (50, 2000), "units": "m"}
+        }
+    },
 }
+
+
 
 
 TIME_START = pd.to_datetime("2025-08-08")
@@ -301,7 +312,7 @@ def calculate_hsi():
         final_hsi = (
                 current_weights.get("SST", 0) * sst_norm +
                 current_weights.get("ChlorophyllA", 0) * chla_norm +
-                current_weights.get("SSHa", 0) * ssha_norm +
+                # current_weights.get("SSHa", 0) * ssha_norm +
                 current_weights.get("Bathymetry", 0) * depth_norm
         )
         # Remove any singleton dimensions (e.g. time dimension)
